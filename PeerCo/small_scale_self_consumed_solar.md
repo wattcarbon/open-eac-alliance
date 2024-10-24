@@ -132,7 +132,7 @@ This section introduces the underlying data requirements.
 
 ### Asset data
 
-PV production data shall be acquired via automatic digital communication to PeerCo's cloud once the project is established. However, in the initial phase of setting up a project (qualifying the site, its data and quantifying the benefits of the scheme), offline extractions of the data in an open format (which may be CSV, XLSX, etc.) may be accepted.
+PV production data shall be acquired via automatic digital communication once the project is established. However, in the initial phase of setting up a project (qualifying the site, its data and quantifying the benefits of the scheme), offline extractions of the data in an open format (which may be CSV, XLSX, etc.) may be accepted.
 
 All self-consumption data (and related generation data) shall be quality controlled prior its usage to generate verified certificates. This verification shall include:
 1. the maximum PV generation is in line with the PV asset's nominal rating,
@@ -257,17 +257,17 @@ This methodology is based upon approaches used in the following methodologies:
 
 All of the relevant existing methodologies are published by the UN Clean Development Mechanism, which focuses on larger scale projects in emerging economies. The small-scale methodology for renewable sources can include projects such as tidal and hydro and can be as large as 15MW. These are still large installations when compared to the small arrays that are being placed individually on roof-tops of homes, offices, warehouses and commercial and industrial buildings.
 
-The methodology being presented by PeerCo is for even smaller-installations than outlined in the CDM methodology, between 30 kWp and up to 4.9 MWp. The micro-versus small-scale is a key distinction as the economics are quite different. In this way, the PeerCo methodology is new, but fits within the same structure, aims and similar emissions calculations to the CDM methodologies. 
+This methodology being presented by PeerCo is for even smaller-installations than outlined in the CDM methodology, between 30 kWp and up to 4.9 MWp. The micro-versus small-scale is a key distinction as the economics are quite different. In this way, the methodology is new, but fits within the same structure, aims and similar emissions calculations to the CDM methodologies. 
 
-The other key difference is that the PeerCo methodology is intended to be used in any country where the delivery of micro-solar is not a requirement for building development or to meet an enforced carbon quota.
+The other key difference is that this methodology is intended to be used in any country where the delivery of micro-solar is not a requirement for building development or to meet an enforced carbon quota.
 
 **Additionality considerations**
 
-The concept of additionality is that a project or investment would not have happened were it not for the additional carbon revenue stream. However, there is sufficient market evidence to prove that without subsidy, small-scale solar, particularly urban solar, has a long repayment period resulting in a marginal business case. Any user of this methodology should use direct carbon funding to those organisations that are making these marginal investments. In countries that are not Kyoto Protocol Annex 1 Countries, there is an even higher threshold for meeting additionality. PeerCo is addressing this point by retaining a percentage of any income stream linked to the use of this methodology and co-investing these funds into community owned energy companies or energy efficiency measures in social housing. 
+The concept of additionality is that a project or investment would not have happened were it not for the additional carbon revenue stream. However, there is sufficient market evidence to prove that without subsidy, small-scale solar, particularly urban solar, has a long repayment period resulting in a marginal business case. Any user of this methodology should use direct carbon funding to those organisations that are making these marginal investments. In countries that are not Kyoto Protocol Annex 1 Countries, there is an even higher threshold for meeting additionality.
 
 Small-scale, self-consumed solar electricity is additional because it has the potential to enable grid systems to decarbonise faster by generating electricity at the location of consumption, within the low voltage, electricity network (after the substation). Small-scale, intermittent, solar electricity that is exported to the grid can create capacity problems in local areas, requiring investment, but its delivery at scale can also reduce the need for larger investments in the transmission network. Incentivising self-consumption of solar is a win-win where the local burden on the network is reduced in tandem with overall demand. Furthermore, more local solar PV and on-site use, supports Sustainable Development Goal 7 - Affordable and Clean Energy, by capturing the carbon value and making it more affordable.
 
-Additionally, there may be situations where solar was delivered as a requirement for development approval for a larger project. PeerCo is valuing the carbon reduction that is delivered by choice, not as a requirement. In some countries and regions, there are financial incentives that may shift the financial case for a solar investment and self-consumption, and for these reasons, PeerCo is assessing the applicability of this methodology on a country by country basis. 
+Additionally, there may be situations where solar was delivered as a requirement for development approval for a larger project. The methodology is valuing the carbon reduction that is delivered by choice, not as a requirement. In some countries and regions, there are financial incentives that may shift the financial case for a solar investment and self-consumption, and for these reasons, the applicability of this methodology needs assessment on a country by country basis. 
 
 ## Appendix 2 - potential sources of emission intensity data
 
