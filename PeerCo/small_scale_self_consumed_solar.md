@@ -47,6 +47,7 @@ The following terminology is used throughout this document to outline requiremen
 | GHG     | Greenhouse gas(es)  |
 | kWh     | Kilowatt-hour (energy unit) |
 | kWp     | Kilowatt peak (installed capacity power unit for PV) |
+| M&V     | Measurement and Verification |
 | MWp     | Megawatt peak (installed capacity power unit for PV) |
 | PV      | Photovoltaic        |
 | UN      | United Nations      |
@@ -279,3 +280,39 @@ The emission intensity data used in calculations shall originate from the source
 | Global        | [ElectricityMaps API](https://www.electricitymaps.com/) |
 
 The source of the carbon intensity data shall be recorded as part of the digital asset generated.
+
+## Appendix 3 - M&V plan template
+
+<!-- Inspiration available here: https://docs.google.com/document/d/1rxprZFyGdoC_9n102smCbcYcZ1gMGg4KpGkBZZQtPqo/edit?tab=t.0 -->
+
+<!-- Notes:
+We may need to add:
+- Contacts in organisations
+- Unique identifiers in the registries (need a discussion with WattCarbon on how we generate universally unique identifiers within OpenEAC - i.e. a data management protocol)
+- Full details address fields
+-->
+
+| Parameter     | Notes                                         |
+|---------------|-----------------------------------------------|
+| Creation date | (using format "yyyy-mm-dd")                   |
+| Methodology   | Small-scale solar self-consumption            |
+| M&V validity start date | (using format "yyyy-mm-dd")         |
+| M&V validity end date | (using format "yyyy-mm-dd")           |
+<!-- Location details -->
+| Country       |  |
+| Site address  | (Optional if GPS coordinates are provided) |
+| GPS coordinates of the site | (Optional if full address is provided - else must be provided with 6 decimals) | 
+| Grid region | (indicate the name and type, e.g. "UK - market-bidding zone") |
+| Identification of the grid connection | (use the local standard for the region, e.g. "MPAN number 123456" for the United Kingdom) |
+
+<!-- Asset details -->
+| Installation rated power [kWp] |  |
+| Generation start date | (using format "yyyy-mm-dd") |
+| Asset identifier(s)   | (any information allowing to uniquely identify the asset - e.g. model(s) and serial number(s)) |
+
+<!-- M&V details -->
+| Owner of the assets | |
+| Organisation carrying out the M&V | |
+| Source of the carbon intensity data | (URL of the service) |
+| Region of the carbon intensity data | (specify the region in the terminology used by the service) | 
+
