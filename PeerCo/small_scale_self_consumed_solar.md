@@ -16,7 +16,7 @@ https://marketplace.visualstudio.com/items?itemName=bierner.markdown-preview-git
 
 **Developed by**: *[PeerCo](www.peerco.earth)*
 
-**Revision date**: *July 5th 2024*
+**Revision date**: *November 4th 2024*
 
 **Sectoral scope**:  *Energy / Energy Distribution / Energy Demand*
 
@@ -47,6 +47,7 @@ The following terminology is used throughout this document to outline requiremen
 | GHG     | Greenhouse gas(es)  |
 | kWh     | Kilowatt-hour (energy unit) |
 | kWp     | Kilowatt peak (installed capacity power unit for PV) |
+| M&V     | Measurement and Verification |
 | MWp     | Megawatt peak (installed capacity power unit for PV) |
 | PV      | Photovoltaic        |
 | UN      | United Nations      |
@@ -279,3 +280,46 @@ The emission intensity data used in calculations shall originate from the source
 | Global        | [ElectricityMaps API](https://www.electricitymaps.com/) |
 
 The source of the carbon intensity data shall be recorded as part of the digital asset generated.
+
+## Appendix 3 - M&V plan template
+
+<!-- Inspiration available here: https://docs.google.com/document/d/1rxprZFyGdoC_9n102smCbcYcZ1gMGg4KpGkBZZQtPqo/edit?tab=t.0 -->
+
+<!-- Notes:
+We may need to add:
+- Unique identifiers in the registries (need a discussion with WattCarbon on how we generate universally unique identifiers within OpenEAC - i.e. a data management protocol)
+-->
+
+The table below is a suggestion for the formalism to be used in filling in an M&V plan for a project.
+
+
+| Parameter     | Value/Notes                                         |
+|---------------|-----------------------------------------------|
+| Creation date |               |
+| Methodology   | Use "Small-scale solar self-consumption"            |
+| M&V validity start date |     |
+| M&V validity end date |       |
+| Country       |  | <!-- Location details -->
+| Site address  | (Optional if GPS coordinates are provided) |
+| GPS coordinates of the site | (Optional if full address is provided - else must be provided with 6 decimals) | 
+| Grid region | (indicate the name and type, e.g. "UK - market-bidding zone") |
+| Identification of the grid connection | (use the local standard for the region, e.g. "MPAN number 123456" for the United Kingdom) |
+| Installation rated power [kWp] |  | <!-- Asset details -->
+| Generation start date |       |
+| Asset identifier(s)   | (any information allowing to uniquely identify the asset - e.g. model(s) and serial number(s)) |
+| Owner of the assets |     | <!-- M&V details -->
+| Asset(s) owner contact | (full name and email) |
+| Organisation carrying out the M&V | |
+| M&V organisation contact | (full name and email) |
+| Source of the carbon intensity data | (URL of the service) |
+| Region of the carbon intensity data | (specify the region in the terminology used by the service) | 
+| Confirmation that the assets have not received public subsidies | |
+| Confirmation that the ownership of the environmental attributes may be transferred to a third party | |
+| OpenEAC registry where the EACs will be registered |  |
+| How will the site measurement data be collected? | (free text input providing the technical details of the data flows from the asset to the M&V organisation) |
+
+In order to avoid ambiguities and improve interoperability, it is recommended that the following conventions are observed:
+- Dates are given in ISO 8601 format (i.e. "yyyy-mm-dd" format),
+- Country codes in ISO 3166 format is added to the country name,
+- For online services, the URL of the service is added after the name,
+- For confirmations, the reference to the contracts where this was declared is provided.
