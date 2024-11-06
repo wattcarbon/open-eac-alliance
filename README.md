@@ -50,7 +50,7 @@ The following methodologies are currently in the queue and will be incorporated 
 
 | Category           | Methodology                                      | Developer      | Pull Request       |
 | ------------------ | ------------------------------------------------ | -------------- | ------------------ |
-| Solar              | Self-Consumed solar PV generation                                  | PeerCo         | wattcarbon/open-eac-alliance#2 |
+| Solar              | Self-Consumed solar PV generation                | PeerCo         | wattcarbon/open-eac-alliance#2 |
 | Energy Efficiency  | Whole-building Metered Lighting                  | C3             | wattcarbon/open-eac-alliance#3 |
 | Energy Efficiency  | Existing Construction Whole-building Simulation  | Auros Group    | wattcarbon/open-eac-alliance#5 |
 | Energy Efficiency  | New Construction Whole-building Simulation       | Auros Group    | wattcarbon/open-eac-alliance#4 |
