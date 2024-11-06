@@ -27,7 +27,7 @@ The development of methodologies will happen in several phases, to enable both f
 | (Pending)  |  |  |  |  |
 
 ### Submission
-Individual methodologies are added by Pull Request ([step-by-step guide](https://github.com/wattcarbon/open-eac-alliance/blob/main/how-to-submit.md)). The methodology file should be added to the repo under the following naming structure: `repo://methodologies/{category}/{methodology_title_snake_case}.md`.
+Individual methodologies are added by Pull Request ([step-by-step guide](https://github.com/wattcarbon/open-eac-alliance/blob/main/how-to-submit.md)). The methodology file should be added to the repo under the following naming structure: `methodologies/{category}/{methodology_title_snake_case}.md`.
 
 ### Approval Process
 
@@ -39,7 +39,7 @@ The approval process proceeds in several steps:
 4. The authors update the methodology based on feedback.
 5. At least 3 reviewers must approve the methodology Pull Request.
 6. A static PDF copy of the methodology is created and sent to the reviewers for official electronic signature.
-7. This signed PDF is uploaded to the repository (under *approved_documents/methodologies* ) and the Pull Request is merged.
+7. This signed PDF is uploaded to the repository (under [approved_documents/methodologies](https://github.com/wattcarbon/open-eac-alliance/blob/main/approved_documents/methodologies) ) and the Pull Request is merged.
 
 ### Methodology Queue
 
