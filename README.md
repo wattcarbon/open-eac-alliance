@@ -12,10 +12,10 @@ For meeting updates and up-to-date communication, see our [substack](https://www
 
 | Category           | Methodology                                      | Author      | Approval Date | URL |
 | ------------------ | ------------------------------------------------ | -------------- | ------------  | ------------  |
-| Basic Decarbonization Accounting  | Decarbonization Accounting        | WattCarbon   | *  | https://docs.wattcarbon.com/m-and-v/shared |
-| Electrification    | Quantifying energy and emissions savings for electrification using attribute based models | WattCarbon and Elephant Energy| * | https://docs.google.com/document/d/e/2PACX-1vTcP5q0VDsP7ewCNHNQBBChud__jor3HES3E45RiKgNZCAlHZ3q6HF6Z0mQ2cSbd7F9SxSbFcdw3wnY/pub |
+| Basic Decarbonization Accounting  | Decarbonization Accounting        | WattCarbon   | *  | [link](https://docs.wattcarbon.com/m-and-v/shared) |
+| Electrification    | Quantifying energy and emissions savings for electrification using attribute based models |Elephant Energy| * | [link](https://docs.google.com/document/d/e/2PACX-1vTcP5q0VDsP7ewCNHNQBBChud__jor3HES3E45RiKgNZCAlHZ3q6HF6Z0mQ2cSbd7F9SxSbFcdw3wnY/pub) |
 | Solar              | Self-Consumed solar PV generation                | PeerCo         | * | | * |
-| Energy Efficiency  | Whole-building Metered Lighting                  | C3             | * | | * |
+| Energy Efficiency  | Whole-building Metered Lighting                  | C3 and Redaptive     | * | | * |
 
 ### Submission
 Individual methodologies are added by Request ([step-by-step guide](https://github.com/wattcarbon/open-eac-alliance/blob/main/how-to-submit.md)). The methodology file should be added to the repo under the following naming structure: `methodologies/{category}/{methodology_title_snake_case}.md`.
