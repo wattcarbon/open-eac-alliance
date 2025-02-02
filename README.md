@@ -14,7 +14,7 @@ For meeting updates and up-to-date communication, see our [substack](https://www
 | ------------------ | ------------------------------------------------ | -------------- | ------------  | ------------ | ------------  |
 | Basic Decarbonization Accounting  | Decarbonization Accounting        | WattCarbon   | Pending  | [link](https://docs.wattcarbon.com/m-and-v/shared) | *  |
 | Electrification    | Quantifying energy and emissions savings for electrification using attribute based models |Elephant Energy| Pending | [link](https://docs.google.com/document/d/e/2PACX-1vTcP5q0VDsP7ewCNHNQBBChud__jor3HES3E45RiKgNZCAlHZ3q6HF6Z0mQ2cSbd7F9SxSbFcdw3wnY/pub) | *  |
-| Solar              | Self-Consumed solar PV generation                | PeerCo         | Pending | *  | *  |
+| Solar              | Self-Consumed solar PV generation                | PeerCo         | Pending | https://github.com/wattcarbon/open-eac-alliance/blob/main/approved_documents/methodologies/Small%20scale%20solar%20self-consumption%20methodology.pdf  | *  |
 | Energy Efficiency  | Whole-building Metered Lighting                  | C3 and Redaptive | Pending  | *  | *  |
 
 ### Submission
