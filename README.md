@@ -10,7 +10,7 @@ For meeting updates and up-to-date communication, see our [substack](https://www
 
 ### Published Methodologies
 
-| Category           | Methodology                                      | Author      | Approval Date | URL | Approved By |
+| Category           | Methodology                                      | Author      | Approval Status | URL | Approved By |
 | ------------------ | ------------------------------------------------ | -------------- | ------------  | ------------ | ------------  |
 | Basic Decarbonization Accounting  | Decarbonization Accounting        | WattCarbon   | Pending  | [link](https://docs.wattcarbon.com/m-and-v/shared) | *  |
 | Whole-Building     | CALTRACK                                      | Recurve and LF Energy  | Approved  | [link](https://www.caltrack.org) | US Department of Energy, California Public Utilities Commission | 
