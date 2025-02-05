@@ -19,7 +19,7 @@ For meeting updates and up-to-date communication, see our [substack](https://www
 | Energy Efficiency  | Whole-building Metered Lighting                  | C3 and Redaptive | Pending  | *  | *  |
 
 ### Submission
-Individual methodologies are added by Request. New methodologies should be in a google doc that allows for public comment. The link should then be shared with one of the OpenEAC Alliance maintainers [mcgee@wattcarbon.com](mcgee@wattcarbon.com) so that it can be added to the table above.
+Individual methodologies are added by Request. New methodologies should be in a google doc that allows for public comment. The link should then be shared with one of the OpenEAC Alliance maintainers (such as [mcgee@wattcarbon.com](mcgee@wattcarbon.com)) so that it can be added to the table above.
 
 ### Approval Process
 
