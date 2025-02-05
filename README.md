@@ -16,7 +16,7 @@ For meeting updates and up-to-date communication, see our [substack](https://www
 | Whole-Building     | CALTRACK                                      | Recurve and LF Energy  | Approved  | [link](https://www.caltrack.org) | US Department of Energy, California Public Utilities Commission | 
 | Electrification    | Quantifying energy and emissions savings for electrification using attribute based models |Elephant Energy| Pending | [link](https://docs.google.com/document/d/e/2PACX-1vTcP5q0VDsP7ewCNHNQBBChud__jor3HES3E45RiKgNZCAlHZ3q6HF6Z0mQ2cSbd7F9SxSbFcdw3wnY/pub) | *  |
 | Solar              | Self-Consumed solar PV generation                | PeerCo         | Approved | [link](https://github.com/wattcarbon/open-eac-alliance/blob/main/approved_documents/methodologies/Small%20scale%20solar%20self-consumption%20methodology.pdf)  | Chris Segerblom, Nicholas Burgess, Sebnem Rusitschka |
-| Energy Efficiency  | Whole-building Metered Lighting                  | C3 and Redaptive | Pending  | *  | *  |
+| Energy Efficiency  | Whole-building Metered Lighting                  | C3 and Redaptive | Pending  | [link](https://docs.google.com/document/d/e/2PACX-1vRiygYF8sn2SGKse62rzzMgh8Gthl3aLbJVDVb8jp1DNn-TLZ5apwxxit4ng7kxlkEfByx_iR-Xyed3/pub)  | *  |
 
 ### Submission
 Individual methodologies are added by Request. New methodologies should be in a google doc that allows for public comment. The link should then be shared with one of the OpenEAC Alliance maintainers (such as [mcgee@wattcarbon.com](mcgee@wattcarbon.com)) so that it can be added to the table above.
