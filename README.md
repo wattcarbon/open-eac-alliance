@@ -19,7 +19,7 @@ For meeting updates and up-to-date communication, see our [substack](https://www
 | Energy Efficiency  | Whole-building Metered Lighting                  | C3 and Redaptive | Pending  | *  | *  |
 
 ### Submission
-Individual methodologies are added by Request ([step-by-step guide](https://github.com/wattcarbon/open-eac-alliance/blob/main/how-to-submit.md)). The methodology file should be added to the repo under the following naming structure: `methodologies/{category}/{methodology_title_snake_case}.md`.
+Individual methodologies are added by Request. New methodologies should be in a google doc that allows for public comment. The link should then be shared with one of the OpenEAC Alliance maintainers [mcgee@wattcarbon.com](mcgee@wattcarbon.com) so that it can be added to the table above.
 
 ### Approval Process
 
