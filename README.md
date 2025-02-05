@@ -12,7 +12,7 @@ For meeting updates and up-to-date communication, see our [substack](https://www
 
 | Category           | Methodology                                      | Author      | Approval Status | URL | Approved By |
 | ------------------ | ------------------------------------------------ | -------------- | ------------  | ------------ | ------------  |
-| Basic Decarbonization Accounting  | Decarbonization Accounting        | WattCarbon   | Pending  | [link](https://docs.wattcarbon.com/m-and-v/shared) | *  |
+| Basic Decarbonization Accounting  | Decarbonization Accounting        | WattCarbon   | Pending  | [link](https://docs.google.com/document/d/e/2PACX-1vQUMTHD9ORo248BqGWIB8Ynx1Nvc6Wwrd7YC-woJed8MFztGXYTP-8uirumnD1d0jIauCttRSMivCoS/pub) | *  |
 | Whole-Building     | CALTRACK                                      | Recurve and LF Energy  | Approved  | [link](https://www.caltrack.org) | US Department of Energy, California Public Utilities Commission | 
 | Electrification    | Quantifying energy and emissions savings for electrification using attribute based models |Elephant Energy| Pending | [link](https://docs.google.com/document/d/e/2PACX-1vTcP5q0VDsP7ewCNHNQBBChud__jor3HES3E45RiKgNZCAlHZ3q6HF6Z0mQ2cSbd7F9SxSbFcdw3wnY/pub) | *  |
 | Solar              | Self-Consumed solar PV generation                | PeerCo         | Approved | [link](https://github.com/wattcarbon/open-eac-alliance/blob/main/approved_documents/methodologies/Small%20scale%20solar%20self-consumption%20methodology.pdf)  | Chris Segerblom, Nicholas Burgess, Sebnem Rusitschka |
