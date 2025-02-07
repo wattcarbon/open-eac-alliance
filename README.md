@@ -14,7 +14,7 @@ For meeting updates and up-to-date communication, see our [substack](https://www
 | Category           | Methodology                                      | Author      | Approval Status | URL | Approved By |
 | ------------------ | ------------------------------------------------ | -------------- | ------------  | ------------ | ------------  |
 | Basic Decarbonization Accounting  | Decarbonization Accounting        | WattCarbon   | Pending  | [link]({{ site.baseurl }}/methodologies/basic-decarbonization-accounting) | *  |
-| Whole-Building     | CALTRACK                                      | Recurve and LF Energy  | Approved  | [link](https://www.caltrack.org) | US Department of Energy, California Public Utilities Commission | 
+| Whole-Building     | CALTRACK                                      | Recurve and LF Energy  | Approved  | [link]({{ site.baseurl }}/methodologies/whole-building-metered) | US Department of Energy, California Public Utilities Commission | 
 | Electrification    | Quantifying energy and emissions savings for electrification using attribute based models |Elephant Energy| Pending | [link]({{ site.baseurl }}/methodologies/device-level-heating-household-electrification) | *  |
 | Solar              | Self-Consumed solar PV generation                | PeerCo         | Approved | [link]({{ site.baseurl }}/methodologies/small-scale-solar-self-consumption-methodology)  | Chris Segerblom, Nicholas Burgess, Sebnem Rusitschka |
 | Energy Efficiency  | Whole-building Metered Lighting                  | C3 and Redaptive | Pending  | [link]({{ site.baseurl }}/methodologies/whole-building-metered-lighting)  | *  |
