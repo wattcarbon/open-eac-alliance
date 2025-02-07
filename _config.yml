@@ -1,0 +1,17 @@
+title: OpenEAC Alliance
+markdown: kramdown
+defaults:
+  -
+    scope:
+      path: ""
+    values:
+      layout: "page"
+  - scope:
+      path: "approved_documents/methodologies"
+      type: "pages"
+    values:
+      layout: redirect
+      redirect_to: "https://raw.githubusercontent.com/wattcarbon/open-eac-alliance/main/"
+plugins:
+  - jekyll-redirect-from
+include: ['_pages']
