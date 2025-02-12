@@ -11,7 +11,7 @@ For a list of our methodologies and their statuses, go to [this page](https://me
 
 
 ### Submission
-Individual methodologies are added by Request. New methodologies should be in a google doc that allows for public comment. The link should then be shared with one of the OpenEAC Alliance maintainers (such as [mcgee@wattcarbon.com](mcgee@wattcarbon.com)) so that it can be added to the table above.
+Individual methodologies are added by Request. New methodologies should be in a google doc that allows for public comment. The link should then be shared with one of the OpenEAC Alliance maintainers (such as [mcgee@wattcarbon.com](mcgee@wattcarbon.com)) so that it can be added to the table.
 
 ### Approval Process
 
