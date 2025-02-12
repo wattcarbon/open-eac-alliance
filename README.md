@@ -7,7 +7,7 @@ The [OpenEAC Alliance](https://www.openeac.org/) is a volunteer organization com
 
 For meeting updates and up-to-date communication, see our [substack](https://www.openeac.org/).
 
-For a list of our methodologies and their statuses, go to [this page](https://methods.wattcarbon.com).
+For a list of our methodologies and their statuses, go to [this page](https://methods.openeac.org).
 
 
 ### Submission
