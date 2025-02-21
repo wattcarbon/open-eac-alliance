@@ -1,4 +1,4 @@
 ---
 permalink: /methodologies/device-level-heating-household-electrification/2025-02-07
-redirect_to: https://docs.google.com/document/d/e/2PACX-1vTcP5q0VDsP7ewCNHNQBBChud__jor3HES3E45RiKgNZCAlHZ3q6HF6Z0mQ2cSbd7F9SxSbFcdw3wnY/pub
+redirect_to: https://docs.google.com/document/d/1rQfZk2Lx5-NMdck_aFx5J_84JeMSBFNYHF9AwgIG-0k/edit?usp=sharing
 ---
