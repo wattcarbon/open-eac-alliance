@@ -9,6 +9,7 @@
 - Nicholas Burgess
 - Chris Segerblom
 - Craig Stevenson
+- Steve Kromer
 
 ## Contributors (alphabetical)
 
