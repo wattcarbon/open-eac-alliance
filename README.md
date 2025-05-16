@@ -18,9 +18,9 @@ Individual methodologies are added by Request. New methodologies should be in a 
 
 The approval process proceeds in several steps:
 
-1. A Request is submitted to the OpenEAC Alliance with a new methodology.
-2. The Request is reviewed by the maintainers and added to the queue for presentation at an OpenEAC Alliance meeting.
-3. The authors present the methodology to the OpenEAC Alliance.
-4. A 30-day public comment period is opened.
-5. After the comment period is closed, the authors update the methodology based on feedback.
-6. If the OpenEAC Alliance approves the methodology, a copy is added to the `approved_documents` section of the repository along with that document's public comment history. Otherwise, the methodology is returned to the authors with feedback for revision.
+1. A methodology is drafted for implementation by one or more stakeholders (using google docs with public comment permission).
+2. This document is shared with the OpeneEAC Alliance maintainers to be posted onto [methods.openeac.org](https://methods.openeac.org)
+3. A 30-day public comment period is opened.
+4. After the comment period is closed, the authors update the methodology based on feedback.
+5. A final version is published.
+6. A PDF copy is added to the `approved_documents` section of the repository along with that document's public comment history.
