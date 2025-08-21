@@ -18,9 +18,8 @@ Individual methodologies are added by Request. New methodologies should be in a 
 
 The approval process proceeds in several steps:
 
-1. A methodology is drafted for implementation by one or more stakeholders (using google docs with public comment permission).
+1. A drat methodology is published for implementation by one or more stakeholders (using google docs with public comment permission).
 2. This document is shared with the OpeneEAC Alliance maintainers to be posted onto [methods.openeac.org](https://methods.openeac.org)
-3. A 30-day public comment period is opened.
+3. A minimum 30-day public comment period is opened.
 4. After the comment period is closed, the authors update the methodology based on feedback.
-5. A final version is published.
-6. A PDF copy is added to the `approved_documents` section of the repository along with that document's public comment history.
+5. A final version is published as a PDF copy, which is added to the `approved_documents` section of the repository along with that document's public comment history.
