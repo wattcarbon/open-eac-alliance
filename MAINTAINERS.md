@@ -17,6 +17,7 @@ We express great thanks to all contributors to the Open EAC Alliance. This is an
 incomplete list of those who have contributed code, documentation, or technical
 artifacts to the project.
 
+- David Bolen
 - Pierre Delforge
 - Nathaniel Meierpolys
 - Koshy Samuel
