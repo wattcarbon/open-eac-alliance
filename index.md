@@ -9,7 +9,7 @@ layout: home
 ### Published Methodologies
 
 
- An asterisk (\*) Represents that the methodology is within the 30-day comment period.
+ An asterisk (\*) Represents that the methodology is within the comment period.
 
 | Category           | Methodology                                      | Published Date | URL |
 | ------------------ | ------------------------------------------------ | ------------  | ------------ |
