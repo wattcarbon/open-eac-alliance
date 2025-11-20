@@ -21,7 +21,7 @@ layout: home
 | Heat Pump/HPWH with Device-Level Sensors | 2025-08-21 | [link]({{ site.baseurl }}/methodologies/device-level-sensors-electrification/2025-08-21) |
 | Whole-Building Metered Demand Response | 2025-10-02* | [link]({{ site.baseurl }}/methodologies/whole-building-metered-demand-response/2025-10-02) |
 | Whole-Building Metered Load Shifting | 2025-10-02* | [link]({{ site.baseurl }}/methodologies/whole-building-metered-load-shifting/2025-10-02) |
-| Weather Normalized Metered+Modeled EE/Electrification | 2025-11-20* | [link]({{ site.baseurl }}/methodologies/whole-building-metered-or-deemed/2025-11-20) |
+| Weather Normalized Metered+Modeled EE/Electrification | 2025-02-07* | [link]({{ site.baseurl }}/methodologies/whole-building-metered-or-deemed/2025-02-07) |
 
 
 {% include_relative MAINTAINERS.md %}
