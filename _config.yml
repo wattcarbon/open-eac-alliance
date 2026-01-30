@@ -15,3 +15,8 @@ defaults:
 plugins:
   - jekyll-redirect-from
 include: ['_pages']
+exclude:
+  - vendor/
+  - Gemfile
+  - Gemfile.lock
+  - node_modules/
