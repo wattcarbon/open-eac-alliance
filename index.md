@@ -19,7 +19,7 @@ layout: home
 | Methodology | Granularity | Published Date | URL |
 | ------------------ | ------------------------------------------------ | ------------  | ------------ |
 | Self-Consumed solar PV generation | Device | 2024-11-04 | [link]({{ site.baseurl }}/methodologies/small-scale-solar-self-consumption-methodology/2024-11-04) |
-| Metered Lighting Upgrade | Building | 2025-02-07 | [link]({{ site.baseurl }}/methodologies/whole-building-metered-lighting/2025-02-07) |
+| Metered Lighting Upgrade | Device | 2025-02-07 | [link]({{ site.baseurl }}/methodologies/device-level-metered-lighting/2025-02-07) |
 | Seasonal Consumption Controls | Device | 2025-08-21 | [link]({{ site.baseurl }}/methodologies/seasonal-controls/2025-08-21) |
 | Heat Pump/HPWH with Sensors | Device | 2025-08-21 | [link]({{ site.baseurl }}/methodologies/device-level-sensors-electrification/2025-08-21) |
 | Weather Normalized Metered+Modeled EE/Electrification | Building | 2025-02-07 | [link]({{ site.baseurl }}/methodologies/whole-building-metered-or-deemed/2025-02-07) |

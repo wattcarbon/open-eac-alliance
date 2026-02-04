@@ -30,4 +30,4 @@ The approval process proceeds in several steps:
 - Asset: describies the energy intervention that results in EACs, such as a solar panel system, battery, demand response event, or building that underwent an energy efficiency upgrade. An Asset exists at a point of metered interconnection between a production or consumption Asset and a network of other Assets that share a common and bounded electricity grid where all imports or exports of electricity to this grid are metered.
 - Meter: The source of measured data used to calculate the impact of the Asset.
 
-We also have written up a general document that includes guidelines to be applied to all methodologies and can be found [here](https://docs.google.com/document/d/1gRlbUPxR4HVqd1OVVaGlLClKK4-HmmhPs-457_GRZqs/view)
+We also have written up a general document that includes guidelines to be applied to all methodologies and can be found [here]({{ site.baseurl }}/shared-guidelines).
