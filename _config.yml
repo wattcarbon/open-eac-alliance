@@ -1,11 +1,13 @@
 title: OpenEAC Alliance
+description: "Repository for M&V methodology for EACs in WEATS"
+theme: jekyll-theme-primer
 markdown: kramdown
 defaults:
   -
     scope:
       path: ""
     values:
-      layout: "page"
+      layout: "default"
   - scope:
       path: "approved_documents/methodologies"
       type: "pages"

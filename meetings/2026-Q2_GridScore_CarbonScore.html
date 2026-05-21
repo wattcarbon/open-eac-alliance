@@ -1,0 +1,1201 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Grid Scores &amp; Carbon Scores | WattCarbon</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,400&family=Outfit:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap');
+
+:root {
+  --bg: #FFFFFF;
+  --surface: #FAFAFB;
+  --surface-2: #F0F3F4;
+  --border: #E5EAEB;
+  --border-strong: #CDD7DA;
+  --text: #003E4A;
+  --text-dim: #6C8C93;
+  --text-muted: #99A5A8;
+  --accent: #0BD4FF;
+  --accent-dim: #068DA9;
+  --accent-glow: #0BD4FF15;
+  --red: #C23934;
+  --red-bg: #FCE9E9;
+  --green: #00913F;
+  --green-bg: #E4F9EE;
+  --yellow: #B07D00;
+  --yellow-bg: #FFF6E0;
+  --dark: #00232C;
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+html { font-size: 21.3px; }
+body { font-family: 'Outfit', sans-serif; background: #0c1416; color: var(--text); overflow: hidden; height: 100vh; width: 100vw; }
+.deck { width: 100vw; height: 100vh; position: relative; }
+
+.slide {
+  position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+  padding: 3.4rem 4.5rem 3rem;
+  display: flex; flex-direction: column;
+  background: var(--bg);
+  opacity: 0; pointer-events: none; transition: opacity 0.45s ease; overflow: hidden;
+}
+.slide.active { opacity: 1; pointer-events: auto; }
+.slide.active .reveal { animation: fadeUp 0.55s ease forwards; }
+.slide.active .reveal-1 { animation-delay: 0.08s; }
+.slide.active .reveal-2 { animation-delay: 0.18s; }
+.slide.active .reveal-3 { animation-delay: 0.30s; }
+.slide.active .reveal-4 { animation-delay: 0.42s; }
+.slide.active .reveal-5 { animation-delay: 0.54s; }
+.slide.active .reveal-6 { animation-delay: 0.66s; }
+.reveal { opacity: 0; transform: translateY(12px); }
+@keyframes fadeUp { to { opacity: 1; transform: translateY(0); } }
+
+/* logo */
+.logo-dark, .logo-light { position: absolute; top: 1.6rem; right: 4.5rem; z-index: 20; transition: opacity 0.45s ease; pointer-events: none; }
+.logo-dark { opacity: 1; } .logo-light { opacity: 0; }
+.logo-dark span, .logo-light span { font-family:'Outfit',sans-serif; font-weight:600; font-size:0.78rem; letter-spacing:0.1em; }
+
+/* typography */
+h1 { font-family: 'Fraunces', serif; font-weight: 400; font-size: 3.7rem; line-height: 1.08; letter-spacing: -0.02em; color: var(--text); }
+h2 { font-family: 'Fraunces', serif; font-weight: 400; font-size: 2.05rem; line-height: 1.16; letter-spacing: -0.01em; color: var(--text); }
+h3 { font-family: 'Outfit', sans-serif; font-weight: 600; font-size: 0.74rem; text-transform: uppercase; letter-spacing: 0.16em; color: var(--accent-dim); }
+p { font-size: 0.95rem; line-height: 1.5; color: var(--text-dim); max-width: 64ch; font-weight: 300; }
+p.large { font-size: 1.18rem; line-height: 1.5; color: var(--text); max-width: 52ch; font-weight: 300; }
+.accent { color: var(--accent-dim); }
+.strong { color: var(--text); font-weight: 500; }
+.spacer { flex: 1; }
+.gap-1 { height: 0.4rem; } .gap-2 { height: 0.8rem; } .gap-3 { height: 1.1rem; } .gap-4 { height: 1.6rem; }
+.row { display: flex; gap: 1.6rem; } .col { flex: 1; min-width: 0; }
+.eyebrow-rule { width: 46px; height: 3px; background: var(--accent); margin-bottom: 1rem; }
+
+/* dark slides */
+.slide.dark { background: var(--dark); color: #F0F4F5; }
+.slide.dark h1, .slide.dark h2 { color: #F4F8F8; }
+.slide.dark h3 { color: var(--accent); }
+.slide.dark p { color: #BBD0D4; }
+
+/* title + divider */
+.title-slide { justify-content: flex-end; padding-bottom: 4.8rem; }
+.title-slide h1 { font-size: 4.4rem; max-width: 18ch; }
+.bg-numeral { position: absolute; font-family: 'Fraunces', serif; font-weight: 300;
+  color: rgba(11,212,255,0.07); line-height: 0.8; pointer-events: none; user-select: none; }
+.title-slide .bg-numeral { top: 1.5rem; right: 3rem; font-size: 19rem; }
+.divider-slide { justify-content: center; }
+.divider-slide .bg-numeral { top: -1rem; right: 2.5rem; font-size: 26rem; }
+.divider-slide::after { content: ''; position: absolute; left: 0; right: 0; bottom: 0;
+  height: 70px; pointer-events: none;
+  background: repeating-linear-gradient(90deg, rgba(11,212,255,0.16) 0 2px, transparent 2px 11px);
+  -webkit-mask-image: linear-gradient(to top, #000, transparent);
+  mask-image: linear-gradient(to top, #000, transparent); }
+.divider-meta { font-size: 0.9rem; color: var(--accent); font-weight: 500; letter-spacing: 0.04em; }
+.presenters { display: flex; gap: 2.4rem; }
+.presenter-name { font-size: 1rem; color: #F0F4F5; font-weight: 500; }
+.presenter-org { font-size: 0.82rem; color: #7FA0A6; }
+
+/* cards / two-box */
+.two-box { display: grid; grid-template-columns: 1fr 1fr; gap: 1.4rem; }
+.box { padding: 1.3rem 1.4rem; border: 1px solid var(--border); border-radius: 10px; background: var(--surface); display: flex; flex-direction: column; }
+.box.tint { background: var(--accent-glow); border-color: #0BD4FF44; }
+.box h4 { font-family: 'Fraunces', serif; font-weight: 500; font-size: 1.3rem; color: var(--text); margin-bottom: 0.2rem; }
+.box .sub { font-size: 0.78rem; color: var(--accent-dim); font-weight: 500; text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 0.7rem; }
+.box ul { list-style: none; font-size: 0.86rem; color: var(--text-dim); line-height: 1.62; font-weight: 300; }
+.box ul li { padding-left: 1rem; position: relative; margin-bottom: 0.15rem; }
+.box ul li::before { content: ''; position: absolute; left: 0; top: 0.55rem; width: 5px; height: 5px; border-radius: 50%; background: var(--accent); }
+.box .units { margin-top: auto; padding-top: 0.7rem; font-size: 0.76rem; color: var(--text-muted); font-weight: 400; }
+
+.info-card { padding: 1rem 1.1rem; border: 1px solid var(--border); border-radius: 9px; background: var(--surface); }
+.info-card.dark-card { background: var(--text); border-color: #1d5560; }
+.info-card.dark-card h4 { color: #F0F4F5; }
+.info-card.dark-card p, .info-card.dark-card li { color: #C7DADD; }
+.info-card h4 { font-size: 0.84rem; font-weight: 600; color: var(--text); margin-bottom: 0.4rem; }
+.info-card p { font-size: 0.8rem; line-height: 1.5; color: var(--text-dim); font-weight: 300; max-width: none; }
+.info-card ul { list-style: none; font-size: 0.8rem; line-height: 1.55; color: var(--text-dim); font-weight: 300; }
+.info-card ul li { padding-left: 0.95rem; position: relative; }
+.info-card ul li::before { content: '\2192'; position: absolute; left: 0; color: var(--accent-dim); }
+.card-label { font-size: 0.68rem; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: var(--accent-dim); margin-bottom: 0.5rem; }
+
+/* checklists */
+.check-list { list-style: none; font-size: 0.98rem; line-height: 1.95; font-weight: 300; color: var(--text-dim); }
+.check-list li { padding-left: 1.5rem; position: relative; }
+.check-list li::before { content: '\2192'; position: absolute; left: 0; color: var(--accent-dim); }
+.slide.dark .check-list { color: #C7DADD; }
+.slide.dark .check-list li::before { color: var(--accent); }
+
+/* steps / flow */
+.steps { display: flex; flex-direction: column; gap: 0.55rem; }
+.step { display: flex; gap: 0.95rem; align-items: flex-start; }
+.step-num { flex-shrink: 0; width: 28px; height: 28px; border-radius: 50%; background: var(--text); color: #fff;
+  display: flex; align-items: center; justify-content: center; font-size: 0.82rem; font-weight: 600; }
+.step.final .step-num { background: var(--accent-dim); }
+.step-text { font-size: 0.92rem; line-height: 1.42; color: var(--text-dim); font-weight: 300; padding-top: 0.18rem; }
+.step-text b { color: var(--text); font-weight: 600; }
+
+/* formula */
+.formula { background: var(--text); border-left: 4px solid var(--accent); border-radius: 0 9px 9px 0;
+  padding: 1rem 1.3rem; font-family: 'JetBrains Mono', monospace; }
+.formula .fline { color: #EAF6F8; font-size: 0.92rem; line-height: 1.7; }
+.formula .fsmall { color: #8FB6BC; font-size: 0.78rem; line-height: 1.6; }
+.formula .v { color: var(--accent); }
+.formula .label { color: #6F9AA1; font-size: 0.66rem; text-transform: uppercase; letter-spacing: 0.14em; margin-bottom: 0.45rem; }
+
+/* highlight / discussion / callout */
+.emphasis { border-left: 3px solid var(--accent); padding: 0.8rem 1.2rem; background: var(--accent-glow);
+  border-radius: 0 8px 8px 0; }
+.emphasis p { color: var(--text); font-weight: 400; max-width: none; font-size: 0.96rem; }
+.discuss { border: 1px dashed var(--accent-dim); background: var(--accent-glow); border-radius: 9px; padding: 0.85rem 1.2rem; }
+.discuss .dtag { font-size: 0.66rem; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase;
+  color: var(--accent-dim); display: block; margin-bottom: 0.35rem; }
+.discuss p { color: var(--text); font-weight: 400; max-width: none; font-size: 0.9rem; font-style: italic; }
+.callout { background: var(--green-bg); border-left: 3px solid var(--green); border-radius: 0 8px 8px 0;
+  padding: 0.8rem 1.2rem; }
+.callout p { color: #14502f; font-weight: 400; max-width: none; font-size: 0.9rem; }
+
+/* tables */
+.table-wrap { background: var(--surface); border: 1px solid var(--border); border-radius: 9px; overflow: hidden; }
+table { width: 100%; border-collapse: collapse; font-size: 0.86rem; }
+th { text-align: left; font-weight: 600; font-size: 0.66rem; text-transform: uppercase; letter-spacing: 0.09em;
+  color: var(--text-muted); padding: 0.6rem 0.9rem; border-bottom: 1px solid var(--border); background: #fff; }
+td { padding: 0.6rem 0.9rem; border-bottom: 1px solid var(--border); color: var(--text-dim);
+  font-weight: 300; vertical-align: top; }
+td:first-child { color: var(--text); font-weight: 500; }
+tr:last-child td { border-bottom: none; }
+table.compact { font-size: 0.78rem; }
+table.compact th { font-size: 0.6rem; padding: 0.5rem 0.7rem; }
+table.compact td { padding: 0.46rem 0.7rem; }
+.num { font-variant-numeric: tabular-nums; }
+tr.total td { background: var(--surface-2); color: var(--text); font-weight: 600; }
+tr.total td:first-child { color: var(--text); }
+
+/* heat map */
+.hm td, .hm th { text-align: center; }
+.hm td.lbl, .hm th.lbl { text-align: left; }
+.hm td { font-size: 0.66rem; font-weight: 600; padding: 0.42rem 0.3rem; }
+.hm td.lbl { font-weight: 600; color: var(--text); font-size: 0.74rem; }
+.h-y { background: var(--green-bg); color: var(--green); }
+.h-p { background: var(--yellow-bg); color: var(--yellow); }
+.h-n { background: var(--red-bg); color: var(--red); }
+
+/* traffic light list */
+.traffic { list-style: none; font-size: 0.82rem; line-height: 1.5; }
+.traffic li { padding: 0.32rem 0; padding-left: 1.3rem; position: relative; color: var(--text-dim); font-weight: 300; }
+.traffic li::before { content: ''; position: absolute; left: 0; top: 0.62rem; width: 9px; height: 9px; border-radius: 50%; }
+.traffic li.t-y::before { background: var(--green); }
+.traffic li.t-p::before { background: #E0A800; }
+.traffic li.t-n::before { background: var(--red); }
+.traffic li b { color: var(--text); font-weight: 600; }
+
+/* pill */
+.pill { display: inline-block; padding: 0.16rem 0.6rem; border-radius: 99px; font-size: 0.66rem;
+  font-weight: 600; letter-spacing: 0.04em; }
+.pill.date { background: var(--surface-2); color: var(--text); font-variant-numeric: tabular-nums; }
+
+/* timeline */
+.timeline { display: flex; flex-direction: column; gap: 0.5rem; }
+.tl-item { display: flex; gap: 0.7rem; align-items: baseline; }
+.tl-item .tl-text { font-size: 0.79rem; line-height: 1.4; color: var(--text-dim); font-weight: 300; }
+.tl-item .tl-text b { color: var(--text); font-weight: 600; }
+
+/* numbered questions */
+.qlist { display: grid; grid-template-columns: 1fr 1fr; gap: 0.85rem 1.6rem; }
+.qitem { display: flex; gap: 0.8rem; }
+.qnum { font-family: 'Fraunces', serif; font-size: 1.5rem; color: var(--accent-dim); line-height: 1; flex-shrink: 0; width: 1.4rem; }
+.qitem h4 { font-size: 0.88rem; font-weight: 600; color: var(--text); margin-bottom: 0.15rem; }
+.qitem p { font-size: 0.78rem; line-height: 1.4; color: var(--text-dim); font-weight: 300; max-width: none; }
+
+/* agenda */
+.agenda-item { display: flex; gap: 1.2rem; align-items: baseline; padding: 0.85rem 0; border-bottom: 1px solid var(--border); }
+.agenda-item:last-child { border-bottom: none; }
+.agenda-num { font-family: 'Fraunces', serif; font-size: 2rem; color: var(--border-strong); line-height: 1; width: 2.6rem; flex-shrink: 0; }
+.agenda-body h4 { font-size: 1.05rem; font-weight: 600; color: var(--text); margin-bottom: 0.12rem; }
+.agenda-body p { font-size: 0.84rem; color: var(--text-dim); font-weight: 300; max-width: none; }
+.agenda-time { margin-left: auto; font-size: 0.78rem; color: var(--accent-dim); font-weight: 500; white-space: nowrap; }
+
+/* viz / charts */
+.viz { width: 100%; display: flex; justify-content: center; align-items: center; }
+.viz svg { width: 100%; height: auto; display: block; }
+.viz svg text, .spark svg text { font-family: 'Outfit', sans-serif; }
+.chartcap { font-size: 0.72rem; color: var(--text-muted); text-align: center; margin-top: 0.4rem; line-height: 1.4; }
+.spark { margin: 0.45rem 0 0.5rem; }
+.spark svg { width: 100%; height: auto; display: block; }
+
+/* nav */
+.nav { position: fixed; bottom: 1.4rem; right: 3rem; display: flex; align-items: center; gap: 0.7rem; z-index: 100; }
+.nav-btn { width: 34px; height: 34px; border: 1px solid var(--border-strong); border-radius: 6px;
+  background: rgba(255,255,255,0.92); color: var(--text-dim); cursor: pointer; display: flex;
+  align-items: center; justify-content: center; font-size: 1rem; transition: all 0.18s; }
+.nav-btn:hover { border-color: var(--accent); color: var(--accent-dim); }
+.nav-counter { font-size: 0.74rem; color: #fff; font-variant-numeric: tabular-nums; min-width: 3.2rem;
+  text-align: center; background: rgba(0,35,44,0.82); padding: 0.3rem 0.5rem; border-radius: 5px; }
+.hint { position: fixed; bottom: 1.55rem; left: 3rem; font-size: 0.68rem; color: rgba(255,255,255,0.55);
+  z-index: 100; letter-spacing: 0.03em; }
+.progress { position: fixed; top: 0; left: 0; height: 3px; background: var(--accent); z-index: 100;
+  transition: width 0.35s ease; }
+
+/* speaker notes */
+.sn { display: none; }
+#notes-panel { position: fixed; left: 0; right: 0; bottom: 0; background: #06292f; color: #cfe3e6;
+  border-top: 2px solid var(--accent); padding: 1rem 4.5rem 1.2rem; z-index: 90;
+  transform: translateY(105%); transition: transform 0.3s ease; max-height: 38vh; overflow-y: auto; }
+#notes-panel.show { transform: translateY(0); }
+#notes-panel .np-head { font-size: 0.68rem; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase;
+  color: var(--accent); margin-bottom: 0.5rem; }
+#notes-panel .np-body { font-size: 0.92rem; line-height: 1.55; font-weight: 300; max-width: 110ch; }
+</style>
+</head>
+<body>
+
+<div class="logo-dark" id="logo-dark">
+  <svg width="19" height="19" viewBox="0 0 27 30" fill="none" style="vertical-align:middle;margin-right:6px;margin-top:-2px;"><path d="M17.09 15L13.54 21.12C13.42 21.32 13.14 21.24 13.14 21V15.47C13.14 15.36 13.07 15.24 12.91 15.24H9.99C9.83 15.24 9.71 15.04 9.79 14.92L13.34 8.8C13.46 8.61 13.74 8.68 13.74 8.92V14.45C13.74 14.57 13.82 14.68 13.97 14.68H16.89C17.05 14.68 17.17 14.88 17.09 15Z" fill="#0BD4FF"/><circle cx="13.54" cy="3" r="3" fill="#003E4A"/><circle cx="3.04" cy="9" r="3" fill="#003E4A"/><circle cx="3.04" cy="21" r="3" fill="#003E4A"/><circle cx="24.04" cy="9" r="3" fill="#003E4A"/><circle cx="24.04" cy="21" r="3" fill="#003E4A"/><circle cx="13.54" cy="27" r="3" fill="#003E4A"/></svg><span style="color:#003E4A;">WATTCARBON</span>
+</div>
+<div class="logo-light" id="logo-light">
+  <svg width="19" height="19" viewBox="0 0 27 30" fill="none" style="vertical-align:middle;margin-right:6px;margin-top:-2px;"><path d="M17.09 15L13.54 21.12C13.42 21.32 13.14 21.24 13.14 21V15.47C13.14 15.36 13.07 15.24 12.91 15.24H9.99C9.83 15.24 9.71 15.04 9.79 14.92L13.34 8.8C13.46 8.61 13.74 8.68 13.74 8.92V14.45C13.74 14.57 13.82 14.68 13.97 14.68H16.89C17.05 14.68 17.17 14.88 17.09 15Z" fill="#0BD4FF"/><circle cx="13.54" cy="3" r="3" fill="#FFFFFF"/><circle cx="3.04" cy="9" r="3" fill="#FFFFFF"/><circle cx="3.04" cy="21" r="3" fill="#FFFFFF"/><circle cx="24.04" cy="9" r="3" fill="#FFFFFF"/><circle cx="24.04" cy="21" r="3" fill="#FFFFFF"/><circle cx="13.54" cy="27" r="3" fill="#FFFFFF"/></svg><span style="color:#FFFFFF;">WATTCARBON</span>
+</div>
+
+<div class="progress" id="progress"></div>
+<div class="deck">
+
+<!-- 1 — TITLE -->
+<div class="slide dark title-slide active" data-slide="1">
+  <div class="bg-numeral reveal reveal-1">GS</div>
+  <div class="spacer"></div>
+  <div class="eyebrow-rule reveal reveal-1"></div>
+  <h1 class="reveal reveal-2">Grid Scores &amp;<br>Carbon Scores</h1>
+  <div class="gap-3"></div>
+  <p class="large reveal reveal-3">Evaluating DER impact across projects, types, and geographies.</p>
+  <div class="gap-4"></div>
+  <div class="divider-meta reveal reveal-4">OpenEAC Alliance Meeting &nbsp;&middot;&nbsp; June 2026</div>
+  <div class="gap-3"></div>
+  <div class="presenters reveal reveal-5">
+    <div><div class="presenter-name">McGee Young</div><div class="presenter-org">WattCarbon</div></div>
+    <div><div class="presenter-name">Steve Suffian</div><div class="presenter-org">WattCarbon</div></div>
+  </div>
+  <aside class="sn">Title slide. This is a discussion-starter for the alliance, not a finished spec. Roughly 20-25 minutes of content across four sections.</aside>
+</div>
+
+<!-- 2 — AGENDA -->
+<div class="slide" data-slide="2">
+  <h3 class="reveal reveal-1">Agenda</h3>
+  <div class="gap-2"></div>
+  <h2 class="reveal reveal-2">Where we're headed today</h2>
+  <div class="gap-4"></div>
+  <div class="reveal reveal-3">
+    <div class="agenda-item">
+      <div class="agenda-num">01</div>
+      <div class="agenda-body"><h4>From Capacity to Scores</h4><p>Why we need standardized impact metrics beyond kWh and kW</p></div>
+      <div class="agenda-time">~5 min</div>
+    </div>
+    <div class="agenda-item">
+      <div class="agenda-num">02</div>
+      <div class="agenda-body"><h4>Carbon Score</h4><p>Measuring emissions impact using average and marginal grid intensity</p></div>
+      <div class="agenda-time">~7 min</div>
+    </div>
+    <div class="agenda-item">
+      <div class="agenda-num">03</div>
+      <div class="agenda-body"><h4>Grid Score</h4><p>Six $/kW-year value streams measuring DER contributions to the grid</p></div>
+      <div class="agenda-time">~10 min</div>
+    </div>
+    <div class="agenda-item">
+      <div class="agenda-num">04</div>
+      <div class="agenda-body"><h4>Questions for the Alliance</h4><p>Capacity measurement, units, and the six-element framework</p></div>
+      <div class="agenda-time">~5 min</div>
+    </div>
+  </div>
+  <aside class="sn">Set expectations: the first three sections build the framework, the last section is where we want the room's input. Section 3 is the longest because the Grid Score is a family of six metrics.</aside>
+</div>
+
+<!-- 3 — DIVIDER 01 -->
+<div class="slide dark divider-slide" data-slide="3">
+  <div class="bg-numeral reveal reveal-1">01</div>
+  <div class="eyebrow-rule reveal reveal-1"></div>
+  <h3 class="reveal reveal-2">Section One</h3>
+  <div class="gap-2"></div>
+  <h1 class="reveal reveal-2">From Capacity<br>to Scores</h1>
+  <div class="gap-3"></div>
+  <p class="large reveal reveal-3">Bridging hourly savings to comparable impact metrics.</p>
+  <aside class="sn">Section divider. We pick up directly from February's DER Capacity presentation.</aside>
+</div>
+
+<!-- 4 — WHERE WE LEFT OFF -->
+<div class="slide" data-slide="4">
+  <h3 class="reveal reveal-1">Where We Left Off</h3>
+  <div class="gap-2"></div>
+  <h2 class="reveal reveal-2">Last time: DER capacity requires hourly M&amp;V</h2>
+  <div class="gap-4"></div>
+  <ul class="check-list reveal reveal-3">
+    <li>The grid's problem is <span class="strong">capacity (kW)</span>, not just energy (kWh)</li>
+    <li>Demand efficiency values savings by <span class="strong">when they happen</span>, not just how much</li>
+    <li>Hourly M&amp;V is non-negotiable &mdash; deemed and annual reporting can't capture timing</li>
+    <li>We need standardized measurement so DER projects can participate in open markets</li>
+  </ul>
+  <div class="gap-4"></div>
+  <div class="emphasis reveal reveal-4">
+    <p>Now that we can measure hourly savings, how do we evaluate and compare the impact of different DER projects?</p>
+  </div>
+  <aside class="sn">Quick bridge — the audience was in the room in February. The setup: we have hourly savings from applying a methodology to a project. Now what do we do with those 8,760 numbers?</aside>
+</div>
+
+<!-- 5 — THE SCORING PROBLEM -->
+<div class="slide" data-slide="5">
+  <h3 class="reveal reveal-1">The Scoring Problem</h3>
+  <div class="gap-2"></div>
+  <h2 class="reveal reveal-2">A battery in Texas and a heat pump in New England &mdash;<br>how do you compare?</h2>
+  <div class="gap-3"></div>
+  <div class="two-box reveal reveal-3">
+    <div class="box">
+      <h4>Battery Storage</h4>
+      <div class="sub">ERCOT</div>
+      <div class="spark"><svg viewBox="0 0 220 72" xmlns="http://www.w3.org/2000/svg">
+  <line x1="14" y1="38" x2="206" y2="38" stroke="#CDD7DA" stroke-width="1" stroke-dasharray="2 3"/>
+  <text x="14" y="11" style="font-size:7px;fill:#99A5A8;letter-spacing:.04em">DISCHARGE +</text>
+  <text x="14" y="70" style="font-size:7px;fill:#99A5A8;letter-spacing:.04em">CHARGE &#8211;</text>
+  <polyline fill="none" stroke="#068DA9" stroke-width="2.2" stroke-linejoin="round" points="14.0,38.0 22.3,38.0 30.7,38.0 39.0,38.0 47.4,38.0 55.7,38.0 64.1,38.0 72.4,38.0 80.8,38.0 89.1,45.2 97.5,54.8 105.8,59.6 114.2,59.6 122.5,57.2 130.9,50.0 139.2,42.8 147.6,35.6 155.9,23.6 164.3,15.2 172.6,16.4 181.0,23.6 189.3,32.0 197.7,38.0 206.0,38.0"/>
+  <circle cx="114.2" cy="59.6" r="2.6" fill="#C23934"/>
+  <circle cx="164.3" cy="15.2" r="2.6" fill="#0BD4FF"/>
+</svg></div>
+      <ul>
+        <li>50 MWh displaced annually</li>
+        <li>Dispatches during summer peaks</li>
+        <li>Short-term baseline</li>
+      </ul>
+    </div>
+    <div class="box">
+      <h4>Heat Pump Retrofit</h4>
+      <div class="sub">ISO-NE</div>
+      <div class="spark"><svg viewBox="0 0 220 72" xmlns="http://www.w3.org/2000/svg">
+  <polygon points="14,60 14.0,46.8 22.3,47.7 30.7,48.1 39.0,48.1 47.4,46.8 55.7,42.4 64.1,33.6 72.4,25.7 80.8,29.2 89.1,35.8 97.5,42.4 105.8,45.9 114.2,46.8 122.5,46.8 130.9,45.9 139.2,42.4 147.6,35.8 155.9,27.0 164.3,20.4 172.6,22.6 181.0,29.2 189.3,35.8 197.7,40.2 206.0,44.2 206,60" fill="#00913F" fill-opacity="0.10"/>
+  <polyline fill="none" stroke="#00913F" stroke-width="2.2" stroke-linejoin="round" points="14.0,46.8 22.3,47.7 30.7,48.1 39.0,48.1 47.4,46.8 55.7,42.4 64.1,33.6 72.4,25.7 80.8,29.2 89.1,35.8 97.5,42.4 105.8,45.9 114.2,46.8 122.5,46.8 130.9,45.9 139.2,42.4 147.6,35.8 155.9,27.0 164.3,20.4 172.6,22.6 181.0,29.2 189.3,35.8 197.7,40.2 206.0,44.2"/>
+  <circle cx="72.4" cy="25.7" r="2.6" fill="#00913F"/>
+  <circle cx="164.3" cy="20.4" r="2.6" fill="#00913F"/>
+  <text x="14" y="70" style="font-size:7px;fill:#99A5A8;letter-spacing:.04em">WINTER HEATING LOAD REDUCED</text>
+</svg></div>
+      <ul>
+        <li>120 MWh displaced annually</li>
+        <li>Reduces winter heating load</li>
+        <li>Long-term counterfactual</li>
+      </ul>
+    </div>
+  </div>
+  <div class="gap-3"></div>
+  <div class="emphasis reveal reveal-4">
+    <p>Which project delivers more grid value? More carbon value? The answer depends on <span class="accent strong">when</span> the savings happen and <span class="accent strong">what the grid needed</span> at that moment.</p>
+  </div>
+  <aside class="sn">The motivating example. Raw MWh numbers are meaningless for comparison. We need scores that normalize across project type, geography, and grid context &mdash; a way to compare apples and oranges for buyers and policymakers.</aside>
+</div>
+
+<!-- 6 — TWO FAMILIES -->
+<div class="slide" data-slide="6">
+  <h3 class="reveal reveal-1">The Framework</h3>
+  <div class="gap-2"></div>
+  <h2 class="reveal reveal-2">Two families of scores</h2>
+  <div class="gap-4"></div>
+  <div class="two-box reveal reveal-3">
+    <div class="box tint">
+      <h4>Carbon Score</h4>
+      <div class="sub">How much did this project reduce grid emissions?</div>
+      <ul>
+        <li>Multiply hourly savings by hourly emissions intensity</li>
+        <li>Two variants: average emissions, marginal emissions</li>
+      </ul>
+      <div class="units">Units &mdash; kg CO&#8322;/hour (or tCO&#8322;/MWh if normalized by savings magnitude)</div>
+    </div>
+    <div class="box tint">
+      <h4>Grid Score</h4>
+      <div class="sub">What is the annualized dollar value of this project's grid contributions?</div>
+      <ul>
+        <li>Six value streams, each denominated in $/kW-year with technology-specific coincidence factors</li>
+        <li>Energy arbitrage, congestion relief, capacity/RA, ancillary services, tariff savings, T&amp;D deferral</li>
+      </ul>
+      <div class="units">Units &mdash; $/kW-year</div>
+    </div>
+  </div>
+  <div class="gap-4"></div>
+  <div class="emphasis reveal reveal-4">
+    <p>Both start from the same input: <span class="strong">hourly energy savings</span> from a standardized methodology.</p>
+  </div>
+  <aside class="sn">Emphasize: these derive from the same hourly savings timeseries. One project gets one set of hourly savings, then multiple scores are computed from it. The scores are independent lenses on the same underlying data.</aside>
+</div>
+
+<!-- 7 — DIVIDER 02 -->
+<div class="slide dark divider-slide" data-slide="7">
+  <div class="bg-numeral reveal reveal-1">02</div>
+  <div class="eyebrow-rule reveal reveal-1"></div>
+  <h3 class="reveal reveal-2">Section Two</h3>
+  <div class="gap-2"></div>
+  <h1 class="reveal reveal-2">Carbon Score</h1>
+  <div class="gap-3"></div>
+  <p class="large reveal reveal-3">Emissions impact using grid intensity data.</p>
+  <aside class="sn">Section divider for Carbon Score — roughly 7 minutes.</aside>
+</div>
+
+<!-- 8 — CARBON SCORE METHODOLOGY -->
+<div class="slide" data-slide="8">
+  <h3 class="reveal reveal-1">Carbon Score &mdash; Methodology</h3>
+  <div class="gap-2"></div>
+  <h2 class="reveal reveal-2">How it works</h2>
+  <div class="gap-4"></div>
+  <div class="row" style="align-items:flex-start;">
+    <div class="col reveal reveal-3">
+      <div class="steps">
+        <div class="step"><div class="step-num">1</div><div class="step-text"><b>Start with hourly savings</b> &mdash; counterfactual minus observed energy for each hour</div></div>
+        <div class="step"><div class="step-num">2</div><div class="step-text"><b>Obtain hourly emissions intensity</b> &mdash; from grid data providers (EPA eGRID, WattTime, Singularity, EIA)</div></div>
+        <div class="step"><div class="step-num">3</div><div class="step-text"><b>Multiply each hour's savings by that hour's intensity</b> &mdash; yields hourly carbon impact (+ avoided, &minus; increased)</div></div>
+        <div class="step final"><div class="step-num">4</div><div class="step-text"><b>Average the hourly carbon impacts</b> = Carbon Score</div></div>
+      </div>
+    </div>
+    <div class="col reveal reveal-4">
+      <div class="formula">
+        <div class="label">Carbon Score</div>
+        <div class="fline">CS = <span class="v">mean</span>(</div>
+        <div class="fline">&nbsp;&nbsp;(counterfactual<span class="v">&#8345;</span> &minus; observed<span class="v">&#8345;</span>)</div>
+        <div class="fline">&nbsp;&nbsp;&times; emissions_intensity<span class="v">&#8345;</span></div>
+        <div class="fline">)</div>
+        <div class="gap-1"></div>
+        <div class="fsmall">for all hours h in the evaluation period &nbsp;&middot;&nbsp; result in kg CO&#8322;/hour</div>
+      </div>
+    </div>
+  </div>
+  <aside class="sn">Walk through the formula. Counterfactual = what would have happened without the DER. Observed = what actually happened. The difference is the savings (positive) or penalty (negative) for that hour. Multiplying by emissions intensity weights each hour by how dirty or clean the grid was at that moment.</aside>
+</div>
+
+<!-- 9 — AVG VS MARGINAL -->
+<div class="slide" data-slide="9">
+  <h3 class="reveal reveal-1">Carbon Score</h3>
+  <div class="gap-2"></div>
+  <h2 class="reveal reveal-2">Two lenses on carbon impact</h2>
+  <div class="gap-4"></div>
+  <div class="two-box reveal reveal-3">
+    <div class="box">
+      <h4 style="font-size:1.15rem;">Average Emissions Intensity</h4>
+      <div class="sub">Carbon footprint of electricity displaced</div>
+      <ul>
+        <li>Average carbon intensity of all generation on the grid that hour</li>
+        <li>Data: EPA eGRID, EIA, some ISO fuel-mix feeds</li>
+        <li>Easier to obtain; available for most regions</li>
+        <li>Better for <span class="strong">accounting</span> &mdash; attributing emissions to consumption</li>
+      </ul>
+    </div>
+    <div class="box">
+      <h4 style="font-size:1.15rem;">Marginal Emissions Intensity</h4>
+      <div class="sub">Emissions actually avoided</div>
+      <ul>
+        <li>Which generator would ramp up or down in response to this change</li>
+        <li>Data: WattTime, Singularity, REsurety, Cambium (NREL)</li>
+        <li>Harder &mdash; requires dispatch modeling or statistical inference</li>
+        <li>Better for <span class="strong">impact</span> &mdash; the causal effect on emissions</li>
+      </ul>
+    </div>
+  </div>
+  <div class="gap-3"></div>
+  <div class="emphasis reveal reveal-4">
+    <p>We compute both. They often tell different stories &mdash; a project in a coal-heavy region may have a high average score but a moderate marginal score if the marginal generator is gas.</p>
+  </div>
+  <aside class="sn">A real and long-running debate in the climate policy community. We don't take a side — we compute both and let buyers decide. Accounting-oriented buyers (Scope 2 reporting) may prefer average; impact-oriented buyers (additionality claims) may prefer marginal.</aside>
+</div>
+
+<!-- 10 — CARBON SCORE EXAMPLE -->
+<div class="slide" data-slide="10">
+  <h3 class="reveal reveal-1">Carbon Score</h3>
+  <div class="gap-2"></div>
+  <h2 class="reveal reveal-2">Carbon Score in practice</h2>
+  <div class="gap-3"></div>
+  <div class="row" style="align-items:flex-start;">
+    <div class="col reveal reveal-3" style="flex:1.08;">
+      <div class="viz"><svg viewBox="0 0 440 240" xmlns="http://www.w3.org/2000/svg">
+  <line x1="44" y1="151.6" x2="404" y2="151.6" stroke="#CDD7DA" stroke-width="1.5"/>
+  <text x="40" y="38" text-anchor="end" style="font-size:8px;fill:#6C8C93">kg CO&#8322;</text>
+  <rect x="95" y="141.6" width="30" height="10.0" fill="#068DA9" rx="1.5"/><text x="110.0" y="137.6" text-anchor="middle" style="font-size:8px;font-weight:700;fill:#068DA9">+5.0</text><rect x="131" y="139.6" width="30" height="12.0" fill="#0BD4FF" rx="1.5"/><text x="146.0" y="135.6" text-anchor="middle" style="font-size:8px;font-weight:700;fill:#0BD4FF">+6.0</text><text x="128" y="200" text-anchor="middle" style="font-size:10px;font-weight:600;fill:#003E4A">2pm</text><text x="128" y="213" text-anchor="middle" style="font-size:8px;fill:#6C8C93">savings +20 kWh</text><rect x="209" y="71.6" width="30" height="80.0" fill="#068DA9" rx="1.5"/><text x="224.0" y="67.6" text-anchor="middle" style="font-size:8px;font-weight:700;fill:#068DA9">+40.0</text><rect x="245" y="47.6" width="30" height="104.0" fill="#0BD4FF" rx="1.5"/><text x="260.0" y="43.6" text-anchor="middle" style="font-size:8px;font-weight:700;fill:#0BD4FF">+52.0</text><text x="242" y="200" text-anchor="middle" style="font-size:10px;font-weight:600;fill:#003E4A">6pm</text><text x="242" y="213" text-anchor="middle" style="font-size:8px;fill:#6C8C93">savings +80 kWh</text><rect x="323" y="151.6" width="30" height="24.0" fill="#068DA9" rx="1.5"/><text x="338.0" y="185.6" text-anchor="middle" style="font-size:8px;font-weight:700;fill:#068DA9">-12.0</text><rect x="359" y="151.6" width="30" height="30.0" fill="#0BD4FF" rx="1.5"/><text x="374.0" y="191.6" text-anchor="middle" style="font-size:8px;font-weight:700;fill:#0BD4FF">-15.0</text><text x="356" y="200" text-anchor="middle" style="font-size:10px;font-weight:600;fill:#003E4A">2am</text><text x="356" y="213" text-anchor="middle" style="font-size:8px;fill:#6C8C93">savings &#8722;30 kWh</text>
+  <g transform="translate(120,228)">
+    <rect x="0" y="-7" width="11" height="9" fill="#068DA9" rx="1.5"/>
+    <text x="16" y="1" style="font-size:8.5px;fill:#6C8C93">Average emissions</text>
+    <rect x="118" y="-7" width="11" height="9" fill="#0BD4FF" rx="1.5"/>
+    <text x="134" y="1" style="font-size:8.5px;fill:#6C8C93">Marginal emissions</text>
+  </g>
+</svg></div>
+      <div class="chartcap">Hourly carbon impact = savings &times; emissions intensity. The 2am bars go negative &mdash; the battery is charging.</div>
+    </div>
+    <div class="col reveal reveal-4">
+      <div class="table-wrap">
+        <table class="compact">
+          <thead><tr><th>Hour</th><th>Savings</th><th>Avg impact</th><th>Marg. impact</th></tr></thead>
+          <tbody>
+            <tr><td>2pm</td><td class="num">+20 kWh</td><td class="num">+5.0 kg</td><td class="num">+6.0 kg</td></tr>
+            <tr><td>6pm</td><td class="num">+80 kWh</td><td class="num">+40.0 kg</td><td class="num">+52.0 kg</td></tr>
+            <tr><td>2am</td><td class="num">&minus;30 kWh</td><td class="num">&minus;12.0 kg</td><td class="num">&minus;15.0 kg</td></tr>
+            <tr class="total"><td>Average</td><td></td><td class="num">11.0 kg/hr</td><td class="num">14.3 kg/hr</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+  <div class="gap-3"></div>
+  <div class="callout reveal reveal-5">
+    <p>The 6pm hour is worth more in both lenses &mdash; the grid is dirtier and the savings are larger. The 2am penalty hurts less because the grid is cleaner at night.</p>
+  </div>
+  <aside class="sn">A toy example, but it illustrates the key dynamics. A battery project shows negative savings during charging hours (2am) but large positive savings during peak (6pm). The Carbon Score captures this net effect, weighted by grid intensity.</aside>
+</div>
+
+<!-- 11 — DIVIDER 03 -->
+<div class="slide dark divider-slide" data-slide="11">
+  <div class="bg-numeral reveal reveal-1">03</div>
+  <div class="eyebrow-rule reveal reveal-1"></div>
+  <h3 class="reveal reveal-2">Section Three</h3>
+  <div class="gap-2"></div>
+  <h1 class="reveal reveal-2">Grid Score</h1>
+  <div class="gap-3"></div>
+  <p class="large reveal reveal-3">Six $/kW-year value streams measuring DER contributions to the grid.</p>
+  <aside class="sn">The longest section — the Grid Score is a family of six $/kW-year value streams. Roughly 10 minutes. The unit of account ($/kW-year) is the native unit for capacity markets, T&amp;D filings, and annualized tariff savings.</aside>
+</div>
+
+<!-- 14b — PREVIOUS ITERATION OF GRID SCORE (from original deck) -->
+<div class="slide" data-slide="14b">
+  <h3 class="reveal reveal-1">Grid Score</h3>
+  <div class="gap-2"></div>
+  <h2 class="reveal reveal-2">Previous Iteration of Grid Score</h2>
+  <div class="gap-3"></div>
+  <div class="viz reveal reveal-3"><svg viewBox="0 0 900 84" xmlns="http://www.w3.org/2000/svg">
+  <rect x="30.0" y="37.4" width="4.3" height="28.6" fill="#D4DEE0" rx="1"/><rect x="37.0" y="32.4" width="4.3" height="33.6" fill="#0BD4FF" rx="1"/><rect x="44.0" y="30.6" width="4.3" height="35.4" fill="#0BD4FF" rx="1"/><rect x="51.0" y="31.7" width="4.3" height="34.3" fill="#0BD4FF" rx="1"/><rect x="58.0" y="34.1" width="4.3" height="31.9" fill="#D4DEE0" rx="1"/><rect x="65.0" y="35.5" width="4.3" height="30.5" fill="#D4DEE0" rx="1"/><rect x="72.0" y="35.1" width="4.3" height="30.9" fill="#D4DEE0" rx="1"/><rect x="79.0" y="33.9" width="4.3" height="32.1" fill="#D4DEE0" rx="1"/><rect x="86.0" y="33.9" width="4.3" height="32.1" fill="#0BD4FF" rx="1"/><rect x="93.0" y="36.7" width="4.3" height="29.3" fill="#D4DEE0" rx="1"/><rect x="100.0" y="42.4" width="4.3" height="23.6" fill="#D4DEE0" rx="1"/><rect x="107.0" y="49.1" width="4.3" height="16.9" fill="#D4DEE0" rx="1"/><rect x="114.0" y="54.2" width="4.3" height="11.8" fill="#D4DEE0" rx="1"/><rect x="121.0" y="55.7" width="4.3" height="10.3" fill="#D4DEE0" rx="1"/><rect x="128.0" y="53.9" width="4.3" height="12.1" fill="#D4DEE0" rx="1"/><rect x="135.0" y="50.7" width="4.3" height="15.3" fill="#D4DEE0" rx="1"/><rect x="142.0" y="48.4" width="4.3" height="17.6" fill="#D4DEE0" rx="1"/><rect x="149.0" y="48.2" width="4.3" height="17.8" fill="#D4DEE0" rx="1"/><rect x="156.0" y="49.5" width="4.3" height="16.5" fill="#D4DEE0" rx="1"/><rect x="163.0" y="50.3" width="4.3" height="15.7" fill="#D4DEE0" rx="1"/><rect x="170.0" y="48.9" width="4.3" height="17.1" fill="#D4DEE0" rx="1"/><rect x="177.0" y="45.1" width="4.3" height="20.9" fill="#D4DEE0" rx="1"/><rect x="184.0" y="40.7" width="4.3" height="25.3" fill="#D4DEE0" rx="1"/><rect x="191.0" y="38.0" width="4.3" height="28.0" fill="#D4DEE0" rx="1"/><rect x="198.0" y="38.8" width="4.3" height="27.2" fill="#D4DEE0" rx="1"/><rect x="205.0" y="43.0" width="4.3" height="23.0" fill="#D4DEE0" rx="1"/><rect x="212.0" y="48.5" width="4.3" height="17.5" fill="#D4DEE0" rx="1"/><rect x="219.0" y="52.9" width="4.3" height="13.1" fill="#D4DEE0" rx="1"/><rect x="226.0" y="54.5" width="4.3" height="11.5" fill="#D4DEE0" rx="1"/><rect x="233.0" y="53.9" width="4.3" height="12.1" fill="#D4DEE0" rx="1"/><rect x="240.0" y="52.8" width="4.3" height="13.2" fill="#D4DEE0" rx="1"/><rect x="247.0" y="53.1" width="4.3" height="12.9" fill="#D4DEE0" rx="1"/><rect x="254.0" y="55.3" width="4.3" height="10.7" fill="#D4DEE0" rx="1"/><rect x="261.0" y="58.0" width="4.3" height="8.0" fill="#D4DEE0" rx="1"/><rect x="268.0" y="58.9" width="4.3" height="7.1" fill="#D4DEE0" rx="1"/><rect x="275.0" y="56.4" width="4.3" height="9.6" fill="#D4DEE0" rx="1"/><rect x="282.0" y="50.7" width="4.3" height="15.3" fill="#D4DEE0" rx="1"/><rect x="289.0" y="43.7" width="4.3" height="22.3" fill="#D4DEE0" rx="1"/><rect x="296.0" y="38.2" width="4.3" height="27.8" fill="#D4DEE0" rx="1"/><rect x="303.0" y="35.8" width="4.3" height="30.2" fill="#D4DEE0" rx="1"/><rect x="310.0" y="36.3" width="4.3" height="29.7" fill="#D4DEE0" rx="1"/><rect x="317.0" y="37.8" width="4.3" height="28.2" fill="#D4DEE0" rx="1"/><rect x="324.0" y="38.2" width="4.3" height="27.8" fill="#D4DEE0" rx="1"/><rect x="331.0" y="36.8" width="4.3" height="29.2" fill="#D4DEE0" rx="1"/><rect x="338.0" y="34.6" width="4.3" height="31.4" fill="#D4DEE0" rx="1"/><rect x="345.0" y="33.6" width="4.3" height="32.4" fill="#0BD4FF" rx="1"/><rect x="352.0" y="35.6" width="4.3" height="30.4" fill="#D4DEE0" rx="1"/><rect x="359.0" y="40.4" width="4.3" height="25.6" fill="#D4DEE0" rx="1"/><rect x="366.0" y="46.2" width="4.3" height="19.8" fill="#D4DEE0" rx="1"/><rect x="373.0" y="50.2" width="4.3" height="15.8" fill="#D4DEE0" rx="1"/><rect x="380.0" y="50.8" width="4.3" height="15.2" fill="#D4DEE0" rx="1"/><rect x="387.0" y="48.2" width="4.3" height="17.8" fill="#D4DEE0" rx="1"/><rect x="394.0" y="44.3" width="4.3" height="21.7" fill="#D4DEE0" rx="1"/><rect x="401.0" y="41.5" width="4.3" height="24.5" fill="#D4DEE0" rx="1"/><rect x="408.0" y="41.0" width="4.3" height="25.0" fill="#D4DEE0" rx="1"/><rect x="415.0" y="42.0" width="4.3" height="24.0" fill="#D4DEE0" rx="1"/><rect x="422.0" y="42.6" width="4.3" height="23.4" fill="#D4DEE0" rx="1"/><rect x="429.0" y="41.0" width="4.3" height="25.0" fill="#D4DEE0" rx="1"/><rect x="436.0" y="37.3" width="4.3" height="28.7" fill="#D4DEE0" rx="1"/><rect x="443.0" y="33.0" width="4.3" height="33.0" fill="#0BD4FF" rx="1"/><rect x="450.0" y="30.8" width="4.3" height="35.2" fill="#0BD4FF" rx="1"/><rect x="457.0" y="32.3" width="4.3" height="33.7" fill="#0BD4FF" rx="1"/><rect x="464.0" y="37.1" width="4.3" height="28.9" fill="#D4DEE0" rx="1"/><rect x="471.0" y="43.4" width="4.3" height="22.6" fill="#D4DEE0" rx="1"/><rect x="478.0" y="48.4" width="4.3" height="17.6" fill="#D4DEE0" rx="1"/><rect x="485.0" y="50.7" width="4.3" height="15.3" fill="#D4DEE0" rx="1"/><rect x="492.0" y="50.9" width="4.3" height="15.1" fill="#D4DEE0" rx="1"/><rect x="499.0" y="50.8" width="4.3" height="15.2" fill="#D4DEE0" rx="1"/><rect x="506.0" y="52.2" width="4.3" height="13.8" fill="#D4DEE0" rx="1"/><rect x="513.0" y="55.5" width="4.3" height="10.5" fill="#D4DEE0" rx="1"/><rect x="520.0" y="59.2" width="4.3" height="6.8" fill="#D4DEE0" rx="1"/><rect x="527.0" y="61.0" width="4.3" height="5.0" fill="#D4DEE0" rx="1"/><rect x="534.0" y="59.3" width="4.3" height="6.7" fill="#D4DEE0" rx="1"/><rect x="541.0" y="54.4" width="4.3" height="11.6" fill="#D4DEE0" rx="1"/><rect x="548.0" y="48.3" width="4.3" height="17.7" fill="#D4DEE0" rx="1"/><rect x="555.0" y="43.6" width="4.3" height="22.4" fill="#D4DEE0" rx="1"/><rect x="562.0" y="42.0" width="4.3" height="24.0" fill="#D4DEE0" rx="1"/><rect x="569.0" y="43.1" width="4.3" height="22.9" fill="#D4DEE0" rx="1"/><rect x="576.0" y="45.0" width="4.3" height="21.0" fill="#D4DEE0" rx="1"/><rect x="583.0" y="45.7" width="4.3" height="20.3" fill="#D4DEE0" rx="1"/><rect x="590.0" y="44.4" width="4.3" height="21.6" fill="#D4DEE0" rx="1"/><rect x="597.0" y="42.3" width="4.3" height="23.7" fill="#D4DEE0" rx="1"/><rect x="604.0" y="41.4" width="4.3" height="24.6" fill="#D4DEE0" rx="1"/><rect x="611.0" y="43.3" width="4.3" height="22.7" fill="#D4DEE0" rx="1"/><rect x="618.0" y="47.8" width="4.3" height="18.2" fill="#D4DEE0" rx="1"/><rect x="625.0" y="53.1" width="4.3" height="12.9" fill="#D4DEE0" rx="1"/><rect x="632.0" y="56.5" width="4.3" height="9.5" fill="#D4DEE0" rx="1"/><rect x="639.0" y="56.2" width="4.3" height="9.8" fill="#D4DEE0" rx="1"/><rect x="646.0" y="52.8" width="4.3" height="13.2" fill="#D4DEE0" rx="1"/><rect x="653.0" y="48.1" width="4.3" height="17.9" fill="#D4DEE0" rx="1"/><rect x="660.0" y="44.5" width="4.3" height="21.5" fill="#D4DEE0" rx="1"/><rect x="667.0" y="43.1" width="4.3" height="22.9" fill="#D4DEE0" rx="1"/><rect x="674.0" y="43.1" width="4.3" height="22.9" fill="#D4DEE0" rx="1"/><rect x="681.0" y="42.6" width="4.3" height="23.4" fill="#D4DEE0" rx="1"/><rect x="688.0" y="40.0" width="4.3" height="26.0" fill="#D4DEE0" rx="1"/><rect x="695.0" y="35.2" width="4.3" height="30.8" fill="#D4DEE0" rx="1"/><rect x="702.0" y="30.0" width="4.3" height="36.0" fill="#0BD4FF" rx="1"/><rect x="709.0" y="27.0" width="4.3" height="39.0" fill="#0BD4FF" rx="1"/><rect x="716.0" y="27.8" width="4.3" height="38.2" fill="#0BD4FF" rx="1"/><rect x="723.0" y="32.0" width="4.3" height="34.0" fill="#0BD4FF" rx="1"/><rect x="730.0" y="37.5" width="4.3" height="28.5" fill="#D4DEE0" rx="1"/><rect x="737.0" y="41.9" width="4.3" height="24.1" fill="#D4DEE0" rx="1"/><rect x="744.0" y="43.7" width="4.3" height="22.3" fill="#D4DEE0" rx="1"/><rect x="751.0" y="43.5" width="4.3" height="22.5" fill="#D4DEE0" rx="1"/><rect x="758.0" y="43.2" width="4.3" height="22.8" fill="#D4DEE0" rx="1"/><rect x="765.0" y="44.6" width="4.3" height="21.4" fill="#D4DEE0" rx="1"/><rect x="772.0" y="47.9" width="4.3" height="18.1" fill="#D4DEE0" rx="1"/><rect x="779.0" y="51.8" width="4.3" height="14.2" fill="#D4DEE0" rx="1"/><rect x="786.0" y="53.8" width="4.3" height="12.2" fill="#D4DEE0" rx="1"/><rect x="793.0" y="52.4" width="4.3" height="13.6" fill="#D4DEE0" rx="1"/><rect x="800.0" y="47.9" width="4.3" height="18.1" fill="#D4DEE0" rx="1"/><rect x="807.0" y="42.4" width="4.3" height="23.6" fill="#D4DEE0" rx="1"/><rect x="814.0" y="38.6" width="4.3" height="27.4" fill="#D4DEE0" rx="1"/><rect x="821.0" y="37.9" width="4.3" height="28.1" fill="#D4DEE0" rx="1"/><rect x="828.0" y="40.0" width="4.3" height="26.0" fill="#D4DEE0" rx="1"/><rect x="835.0" y="42.9" width="4.3" height="23.1" fill="#D4DEE0" rx="1"/><rect x="842.0" y="44.5" width="4.3" height="21.5" fill="#D4DEE0" rx="1"/><rect x="849.0" y="44.1" width="4.3" height="21.9" fill="#D4DEE0" rx="1"/><rect x="856.0" y="43.0" width="4.3" height="23.0" fill="#D4DEE0" rx="1"/><rect x="863.0" y="43.1" width="4.3" height="22.9" fill="#D4DEE0" rx="1"/>
+  <line x1="30" y1="66" x2="870" y2="66" stroke="#CDD7DA" stroke-width="1.5"/>
+  <text x="30" y="80" style="font-size:9px;fill:#6C8C93">8,760 hourly savings values &#183; one bar &#8776; 73 hours</text>
+  <g transform="translate(640,76)">
+    <rect x="0" y="-8" width="12" height="10" fill="#0BD4FF" rx="1.5"/>
+    <text x="18" y="0" style="font-size:9px;font-weight:600;fill:#068DA9">stress hours &#8212; filtered into the numerator</text>
+  </g>
+</svg></div>
+  <div class="chartcap reveal reveal-3" style="text-align:left;margin-left:0.1rem;">Take one year of hourly savings, keep only the stress hours, sum them, divide by all positive savings.</div>
+  <div class="gap-3"></div>
+  <div class="row" style="align-items:flex-start;">
+    <div class="col reveal reveal-4">
+      <div class="steps">
+        <div class="step"><div class="step-num">1</div><div class="step-text"><b>Start with hourly savings</b> (same input as Carbon Score)</div></div>
+        <div class="step"><div class="step-num">2</div><div class="step-text"><b>Define "stress hours"</b> using an external signal specific to that score</div></div>
+        <div class="step"><div class="step-num">3</div><div class="step-text"><b>Filter savings to those hours, then sum</b> = numerator</div></div>
+        <div class="step final"><div class="step-num">4</div><div class="step-text"><b>Divide by Total Displaced Electricity</b> = sum of all positive-savings hours</div></div>
+      </div>
+    </div>
+    <div class="col reveal reveal-5">
+      <div class="formula">
+        <div class="label">Grid Score</div>
+        <div class="fline">GS =</div>
+        <div class="fline">&nbsp;&nbsp;<span class="v">&Sigma;</span>( savings<span class="v">&#8345;</span> )&nbsp;&nbsp;<span style="color:#6F9AA1;">for h in stress_hours</span></div>
+        <div class="fline" style="border-top:1px solid #1d5560;margin-top:0.3rem;padding-top:0.3rem;">&nbsp;&nbsp;<span class="v">&divide;</span> Total Displaced Electricity</div>
+        <div class="gap-1"></div>
+        <div class="fsmall">Total Displaced = <span class="v">&Sigma;</span> savings&#8345; for all h where savings&#8345; > 0 &nbsp;&middot;&nbsp; no weighting term</div>
+      </div>
+      <div class="gap-2"></div>
+      <div class="emphasis">
+        <p>A Grid Score of <span class="strong">0.30</span> means 30% of the project's total displaced electricity occurred during grid stress hours. <span class="accent strong">Higher is better.</span> All six scores are pure, unweighted kWh ratios.</p>
+      </div>
+    </div>
+  </div>
+  <aside class="sn">The core pattern. All six variants follow it &mdash; the only thing that changes is what defines the stress hours. Every grid score is an unweighted kWh ratio. The denominator choice (total displaced electricity, not net savings) is a deliberate decision we revisit in Section 4.</aside>
+</div>
+
+<!-- 12 — GRID SCORE PATTERN -->
+<div class="slide" data-slide="12">
+  <h3 class="reveal reveal-1">Grid Score &mdash; The General Pattern</h3>
+  <div class="gap-2"></div>
+  <h2 class="reveal reveal-2">How Grid Scores work</h2>
+  <div class="gap-3"></div>
+  <div class="row" style="align-items:flex-start;">
+    <div class="col reveal reveal-3">
+      <div class="steps">
+        <div class="step"><div class="step-num">1</div><div class="step-text"><b>Geo-assign the asset</b> &mdash; resolve to Balancing Authority, pricing node, tariff zone, AS region, or feeder (each stream uses a different geographic level)</div></div>
+        <div class="step"><div class="step-num">2</div><div class="step-text"><b>Look up the stream's $/kW-year benchmark</b> &mdash; from market data (LMP, BRA, AS clearing prices), tariff schedules, or NWA filings</div></div>
+        <div class="step"><div class="step-num">3</div><div class="step-text"><b>Apply a technology-specific coincidence factor</b> &mdash; the fraction of theoretical value this DER archetype realistically captures</div></div>
+        <div class="step final"><div class="step-num">4</div><div class="step-text"><b>Scale by scenario</b> &mdash; low/mid/high escalators act as error bars (e.g. 0.85 / 1.00 / 1.25)</div></div>
+      </div>
+      <div class="gap-2"></div>
+      <div class="emphasis">
+        <p style="font-size:0.82rem;">Data availability varies significantly by geography. Wholesale-market scores require ISO data. Capacity/RA is broadly available via EIA-930. Tariff savings is computable everywhere. T&amp;D deferral is the most constrained &mdash; limited to CA and NY for distribution-level data.</p>
+      </div>
+    </div>
+    <div class="col reveal reveal-4">
+      <div class="formula">
+        <div class="label">Grid Score (per stream)</div>
+        <div class="fline">Value = $/kW-yr<span class="v">benchmark</span></div>
+        <div class="fline">&nbsp;&nbsp;&times; coincidence_factor<span class="v">(tech, mode, stream)</span></div>
+        <div class="fline">&nbsp;&nbsp;&times; capacity<span class="v">kW</span></div>
+        <div class="fline">&nbsp;&nbsp;&times; scenario_factor</div>
+      </div>
+      <div class="gap-2"></div>
+      <div class="emphasis">
+        <p>A Grid Score of <span class="strong">$60/kW-yr</span> for Capacity/RA means each kW of DER capacity delivers $60/year of capacity value to the grid. The coincidence factor adjusts for how well the technology actually captures that value. <span class="accent strong">Higher is better.</span></p>
+      </div>
+      <div class="gap-2"></div>
+      <div class="info-card">
+        <h4>Scenario escalators</h4>
+        <p style="font-size:0.8rem;">Low / mid / high (e.g. 0.85 / 1.00 / 1.25) are <em>error bars</em> around the medium estimate, not distinct scenarios. They capture uncertainty in load growth and market evolution.</p>
+      </div>
+    </div>
+  </div>
+  <aside class="sn">The core pattern. Each grid score is a $/kW-year value stream. The benchmark comes from market data or filings, the coincidence factor captures how well the technology archetype captures that value under realistic operating constraints, and the scenario factor provides error bars. Data availability varies widely by geography &mdash; wholesale scores need ISO data, tariff savings is universal.</aside>
+</div>
+
+<!-- 13 — SIX COMPONENTS -->
+<div class="slide" data-slide="13">
+  <h3 class="reveal reveal-1">Grid Score</h3>
+  <div class="gap-2"></div>
+  <h2 class="reveal reveal-2">Six dimensions of grid impact</h2>
+  <div class="gap-3"></div>
+  <div class="table-wrap reveal reveal-3">
+    <table class="compact">
+      <thead><tr>
+        <th>Grid Score</th><th>What It Measures</th><th>$/kW-yr Data Source</th><th>Geographic Level</th>
+      </tr></thead>
+      <tbody>
+        <tr><td>Tariff Savings</td><td>Retail rate structure alignment</td><td>Utility tariff schedules (TOU, demand charges)</td><td>Utility service territory</td></tr>
+        <tr><td>Energy Arbitrage</td><td>Value of shifting energy across time</td><td>Energy component of LMP</td><td>Pricing node or zone</td></tr>
+        <tr><td>Congestion Relief</td><td>Wholesale market congestion relief</td><td>Congestion component of LMP</td><td>Pricing node or zone</td></tr>
+        <tr><td>Capacity / RA</td><td>Peak demand contribution</td><td>RA clearing price or BRA auction results</td><td>Balancing Authority</td></tr>
+        <tr><td>Ancillary Services</td><td>Grid balancing contribution</td><td>Composite AS clearing price</td><td>Zone or system-wide</td></tr>
+        <tr><td>T&amp;D Deferral</td><td>Local infrastructure relief</td><td>NWA filings, LNBA, E3 ACC fallbacks</td><td>Transmission node / feeder</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <div class="gap-3"></div>
+  <p class="reveal reveal-4" style="max-width:none;font-size:0.86rem;">Each score is denominated in $/kW-year &mdash; the annualized value a 1 kW DER delivers through that stream. The coincidence factor for each technology adjusts for realistic operating constraints. A rooftop solar project might score well on energy arbitrage but poorly on capacity/RA &mdash; the multi-dimensional view is the point.</p>
+  <aside class="sn">Walk through each row briefly. These capture fundamentally different types of grid value. Each is a $/kW-year value stream &mdash; the native unit of account for capacity markets, T&amp;D filings, and annualized tariff savings. A rooftop solar project may score well on energy arbitrage but poorly on capacity/RA. A battery may score well on both. The coincidence factor and scenario escalator adjust benchmarks to the specific technology and uncertainty range.</aside>
+</div>
+
+<!-- 13b — ELIGIBILITY & COINCIDENCE FACTORS -->
+<div class="slide" data-slide="13b">
+  <h3 class="reveal reveal-1">Grid Score &mdash; Eligibility &amp; Coincidence Factors</h3>
+  <div class="gap-2"></div>
+  <h2 class="reveal reveal-2">Not every DER captures the same value</h2>
+  <div class="gap-3"></div>
+  <div class="row" style="align-items:flex-start;">
+    <div class="col reveal reveal-3">
+      <div class="card-label">Technology archetypes &amp; control modes</div>
+      <p style="font-size:0.84rem;">Each DER is classified by <span class="strong">technology</span> (battery, HVAC, smart-thermostat, solar+storage) and <span class="strong">control mode</span> (wholesale-bid, self-consumption, demand-response). The combination determines which value streams the project is eligible for and how much of each stream it captures.</p>
+      <div class="gap-2"></div>
+      <div class="card-label">What is a coincidence factor?</div>
+      <p style="font-size:0.84rem;">The fraction of a stream's theoretical value that the archetype captures under realistic operating constraints. Not the fraction of theoretical <em>capacity</em> &mdash; the fraction of theoretical <em>value</em>. A factor of 0.00 means the project is ineligible for that stream.</p>
+      <div class="gap-2"></div>
+      <div class="emphasis">
+        <p style="font-size:0.82rem;">Coincidence factors vary by stream &mdash; a battery might be 0.90 for energy arbitrage but 0.60 for ancillary services (must reserve state-of-charge headroom). A wholesale-bid battery gets 0.00 for tariff savings (no retail exposure).</p>
+      </div>
+    </div>
+    <div class="col reveal reveal-4">
+      <div class="card-label">Example: Capacity / RA coincidence factors</div>
+      <div class="table-wrap">
+        <table class="compact">
+          <thead><tr><th>Technology</th><th>Control Mode</th><th>Factor</th><th>Citation</th></tr></thead>
+          <tbody>
+            <tr><td>battery</td><td>wholesale-bid</td><td class="num">0.85</td><td>CAISO 2024 RA QC; PJM ELCC 4-hr derate</td></tr>
+            <tr><td>battery</td><td>self-consumption</td><td class="num">0.00</td><td>Not counted towards capacity</td></tr>
+            <tr><td>hvac</td><td>demand-response</td><td class="num">0.70</td><td>Internal est.; FERC-201 participation</td></tr>
+            <tr><td>smart-thermostat</td><td>demand-response</td><td class="num">0.40</td><td>Internal est.; seasonal availability</td></tr>
+            <tr><td>solar+storage</td><td>wholesale-bid</td><td class="num">0.80</td><td>NREL ATB 2024; coupled capacity credit</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+  <aside class="sn">Now that we've seen the six streams, this slide explains how the value adjusts per technology. The key insight: the same market benchmark produces very different values for different DER types depending on their ability to actually deliver that value. A self-consumption battery gets zero capacity value because it can't prove dispatchability to the grid operator. Coincidence factors and scenario escalators are the two main knobs that adjust the raw benchmark to reality.</aside>
+</div>
+
+<!-- 14 — SETTLEMENT VS FORECAST -->
+<div class="slide" data-slide="14">
+  <h3 class="reveal reveal-1">Grid Score</h3>
+  <div class="gap-2"></div>
+  <h2 class="reveal reveal-2">Settlement vs. Forecast</h2>
+  <p class="reveal reveal-2" style="font-size:0.86rem;color:#6C8C93;margin-top:0.3rem;">Two modes for computing grid value. Forecasting uses coincidence factors to estimate what a DER will deliver.</p>
+  <div class="gap-2"></div>
+  <div class="row" style="align-items:flex-start;">
+    <div class="col reveal reveal-3">
+      <div class="box" style="padding:0.85rem 1rem;margin-bottom:0.7rem;">
+        <h4 style="font-size:1rem;">Settlement (historical)</h4>
+        <div class="formula" style="margin:0.5rem 0;">
+          <div class="fline" style="font-size:0.78rem;">value = <span class="v">&Sigma;</span>( actual_price<span class="v">&#8345;</span> &times; actual_savings<span class="v">&#8345;</span> )</div>
+        </div>
+        <ul style="font-size:0.8rem;">
+          <li><b>Granularity:</b> location &times; hour</li>
+          <li>Observed market data &times; metered savings</li>
+          <li>&ldquo;What was this DER worth last month?&rdquo;</li>
+        </ul>
+      </div>
+      <div class="box" style="padding:0.85rem 1rem;">
+        <h4 style="font-size:1rem;">Forecast (forward-looking)</h4>
+        <div class="formula" style="margin:0.5rem 0;">
+          <div class="fline" style="font-size:0.78rem;">value = $/kW-yr<span class="v">benchmark</span> &times; <span class="strong">coincidence</span> &times; capacity</div>
+        </div>
+        <ul style="font-size:0.8rem;">
+          <li><b>Granularity:</b> location &times; quarter</li>
+          <li>Deemed loadshapes &times; benchmark prices &times; <span class="strong">coincidence factors</span></li>
+          <li>&ldquo;If I built a battery here, what would it be worth?&rdquo;</li>
+        </ul>
+      </div>
+    </div>
+    <div class="col reveal reveal-4">
+      <div class="card-label">Which streams use which mode?</div>
+      <div class="table-wrap">
+        <table class="compact">
+          <thead><tr><th>Stream</th><th>Settlement</th><th>Forecast</th></tr></thead>
+          <tbody>
+            <tr><td>Tariff Savings</td><td>Metered actuals</td><td>Deemed loadshape &times; coincidence</td></tr>
+            <tr><td>Energy Arbitrage</td><td>Hourly actuals</td><td>Deemed loadshape &times; coincidence</td></tr>
+            <tr><td>Congestion Relief</td><td>Hourly actuals</td><td>Deemed loadshape &times; coincidence</td></tr>
+            <tr><td>Capacity / RA</td><td colspan="2" style="text-align:center;">Entirely deemed (settlement = forecast)</td></tr>
+            <tr><td>Ancillary Services</td><td colspan="2" style="text-align:center;">Entirely deemed (settlement = forecast)</td></tr>
+            <tr><td>T&amp;D Deferral</td><td colspan="2" style="text-align:center;">Entirely deemed (settlement = forecast)</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="gap-2"></div>
+      <div class="emphasis">
+        <p style="font-size:0.82rem;">Deemed streams always use coincidence factors. Hourly-settled streams only use them in forecast mode &mdash; settlement has real data instead.</p>
+      </div>
+    </div>
+  </div>
+  <aside class="sn">Coincidence factors are the bridge between benchmark $/kW-year values and what a specific technology actually captures. In settlement mode, you have real price and savings data — no coincidence factor needed. In forecast mode, you don't have actuals yet, so the coincidence factor stands in for how well this technology archetype historically captures value from this stream. Deemed streams (capacity/RA, AS, T&amp;D) always use coincidence factors because there's no hourly settlement — the value comes from published clearing prices or NWA filings.</aside>
+</div>
+
+<!-- 15 — TARIFF SAVINGS -->
+<div class="slide" data-slide="15">
+  <h3 class="reveal reveal-1">Grid Score &mdash; Component 1</h3>
+  <div class="gap-2"></div>
+  <h2 class="reveal reveal-2">Tariff Savings</h2>
+  <p class="reveal reveal-2" style="font-size:0.86rem;color:#6C8C93;margin-top:0.3rem;">How much a DER reduces a customer's retail electricity bill.</p>
+  <div class="gap-2"></div>
+  <div class="row" style="align-items:flex-start;">
+    <div class="col reveal reveal-3">
+      <div class="formula">
+        <div class="label">Settlement</div>
+        <div class="fline" style="font-size:0.82rem;">value = <span class="v">&Sigma;</span>( counterfactual<span class="v">&#8345;</span> &minus; observed<span class="v">&#8345;</span> ) &times; tariff<span class="v">&#8345;</span></div>
+      </div>
+      <div class="gap-1"></div>
+      <div class="formula">
+        <div class="label">Forecast</div>
+        <div class="fline" style="font-size:0.82rem;">value = deemed_loadshape &times; tariff_schedule &times; coincidence</div>
+      </div>
+      <div class="gap-2"></div>
+      <div class="card-label">Key points</div>
+      <ul style="font-size:0.84rem;">
+        <li><span class="strong">Geography:</span> Utility service territory</li>
+        <li>Captures TOU differentials, demand charges, and critical peak pricing</li>
+        <li>Wholesale-bid batteries get <span class="strong">0.00</span> &mdash; no retail tariff exposure</li>
+        <li>Self-consumption batteries: 0.80 (demand-charge avoidance)</li>
+      </ul>
+    </div>
+    <div class="col reveal reveal-4">
+      <div class="card-label">Data availability</div>
+      <ul class="traffic">
+        <li class="t-y"><b>All regulated utilities</b> &mdash; tariff schedules are public; most universally computable score</li>
+        <li class="t-y"><b>OpenEI</b> &mdash; U.S. Utility Rate Database covers &gt;3,000 utilities</li>
+        <li class="t-p"><b>Critical peak pricing</b> &mdash; event calendars vary by utility</li>
+      </ul>
+      <div class="gap-2"></div>
+      <div class="info-card">
+        <h4>Unique challenge</h4>
+        <p>Tariffs vary enormously by utility, rate class, and vintage &mdash; the score must reference each project's specific applicable tariff.</p>
+      </div>
+    </div>
+  </div>
+  <aside class="sn">The most retail-facing score and the most universally computable — every utility publishes rate schedules, including non-ISO regions. Settlement uses actual metered data against the tariff; forecast uses NREL deemed loadshapes with coincidence factors. Key distinction: wholesale-bid batteries get 0.00 because they have no retail tariff exposure. Self-consumption batteries get 0.80 (E3 EA-2023 demand-charge avoidance fraction). The challenge remains standardization: tariff structures vary enormously by utility, rate class, and vintage.</aside>
+</div>
+
+<!-- 16 — ENERGY ARBITRAGE & CONGESTION RELIEF (LMP-BASED) -->
+<div class="slide" data-slide="16">
+  <h3 class="reveal reveal-1">Grid Score &mdash; Components 2 &amp; 3 (LMP-based)</h3>
+  <div class="gap-2"></div>
+  <h2 class="reveal reveal-2">Energy Arbitrage &amp; Congestion Relief</h2>
+  <p class="reveal reveal-2" style="font-size:0.86rem;color:#6C8C93;margin-top:0.3rem;">Both derived from LMP decomposition: LMP = Energy + Congestion + Losses. Each component is scored separately.</p>
+  <div class="gap-2"></div>
+  <div class="row" style="align-items:flex-start;">
+    <div class="col reveal reveal-3">
+      <div class="formula">
+        <div class="label">Energy Arbitrage</div>
+        <div class="fline" style="font-size:0.78rem;"><b>Settlement:</b> <span class="v">&Sigma;</span>( energy_LMP<span class="v">&#8345;</span> &times; savings<span class="v">&#8345;</span> )</div>
+        <div class="fline" style="font-size:0.78rem;"><b>Forecast:</b> energy_LMP &times; deemed_loadshape &times; coincidence</div>
+      </div>
+      <ul style="font-size:0.8rem;margin-top:0.4rem;">
+        <li>Uses <span class="strong">energy component</span> only, not full wholesale price</li>
+        <li>Value concentrates in evening ramp and solar oversupply periods</li>
+      </ul>
+      <div class="gap-2"></div>
+      <div class="formula">
+        <div class="label">Congestion Relief</div>
+        <div class="fline" style="font-size:0.78rem;"><b>Settlement:</b> <span class="v">&Sigma;</span>( congestion_LMP<span class="v">&#8345;</span> &times; savings<span class="v">&#8345;</span> ) &nbsp;<span style="color:#6F9AA1;">where &gt; 0</span></div>
+        <div class="fline" style="font-size:0.78rem;"><b>Forecast:</b> congestion_LMP &times; deemed_loadshape &times; coincidence</div>
+      </div>
+      <ul style="font-size:0.8rem;margin-top:0.4rem;">
+        <li>Uses <span class="strong">congestion component</span> only; negative hours set to 0</li>
+        <li>A node can be low on arbitrage but high on congestion</li>
+      </ul>
+    </div>
+    <div class="col reveal reveal-4">
+      <div class="viz"><svg viewBox="0 0 340 280" xmlns="http://www.w3.org/2000/svg">
+  <!-- Stylized ISO region map with LMP nodes -->
+  <!-- Region outline -->
+  <rect x="20" y="20" width="300" height="240" rx="12" fill="#F0F4F5" stroke="#CDD7DA" stroke-width="1.5"/>
+  <text x="170" y="14" text-anchor="middle" style="font-size:9px;font-weight:700;fill:#003E4A">ISO Region &mdash; Pricing Nodes</text>
+
+  <!-- Transmission lines -->
+  <line x1="60" y1="80" x2="160" y2="100" stroke="#CDD7DA" stroke-width="1.5"/>
+  <line x1="160" y1="100" x2="280" y2="90" stroke="#CDD7DA" stroke-width="1.5"/>
+  <line x1="160" y1="100" x2="120" y2="180" stroke="#CDD7DA" stroke-width="1.5"/>
+  <line x1="160" y1="100" x2="240" y2="170" stroke="#CDD7DA" stroke-width="1.5"/>
+  <line x1="120" y1="180" x2="240" y2="170" stroke="#CDD7DA" stroke-width="1.5"/>
+  <line x1="240" y1="170" x2="280" y2="90" stroke="#CDD7DA" stroke-width="1.5"/>
+  <line x1="120" y1="180" x2="80" y2="230" stroke="#CDD7DA" stroke-width="1.5"/>
+  <line x1="240" y1="170" x2="260" y2="230" stroke="#CDD7DA" stroke-width="1.5"/>
+
+  <!-- Congested line (thick, orange) -->
+  <line x1="160" y1="100" x2="240" y2="170" stroke="#E07000" stroke-width="3" stroke-dasharray="6 3"/>
+  <text x="210" y="128" style="font-size:7px;fill:#E07000;font-weight:600" transform="rotate(42,210,128)">congested</text>
+
+  <!-- Green nodes (uncongested) -->
+  <circle cx="60" cy="80" r="10" fill="#00913F" fill-opacity="0.2" stroke="#00913F" stroke-width="1.5"/>
+  <text x="60" y="84" text-anchor="middle" style="font-size:7px;font-weight:700;fill:#00913F">$32</text>
+  <circle cx="280" cy="90" r="10" fill="#00913F" fill-opacity="0.2" stroke="#00913F" stroke-width="1.5"/>
+  <text x="280" y="94" text-anchor="middle" style="font-size:7px;font-weight:700;fill:#00913F">$35</text>
+  <circle cx="160" cy="100" r="10" fill="#00913F" fill-opacity="0.2" stroke="#00913F" stroke-width="1.5"/>
+  <text x="160" y="104" text-anchor="middle" style="font-size:7px;font-weight:700;fill:#00913F">$30</text>
+  <circle cx="80" cy="230" r="10" fill="#00913F" fill-opacity="0.2" stroke="#00913F" stroke-width="1.5"/>
+  <text x="80" y="234" text-anchor="middle" style="font-size:7px;font-weight:700;fill:#00913F">$34</text>
+  <circle cx="120" cy="180" r="10" fill="#00913F" fill-opacity="0.2" stroke="#00913F" stroke-width="1.5"/>
+  <text x="120" y="184" text-anchor="middle" style="font-size:7px;font-weight:700;fill:#00913F">$31</text>
+
+  <!-- Orange node (congested) -->
+  <circle cx="240" cy="170" r="13" fill="#E07000" fill-opacity="0.2" stroke="#E07000" stroke-width="2"/>
+  <text x="240" y="174" text-anchor="middle" style="font-size:8px;font-weight:700;fill:#E07000">$78</text>
+  <circle cx="260" cy="230" r="11" fill="#E07000" fill-opacity="0.2" stroke="#E07000" stroke-width="2"/>
+  <text x="260" y="234" text-anchor="middle" style="font-size:7px;font-weight:700;fill:#E07000">$65</text>
+
+  <!-- DER project dots near nodes -->
+  <circle cx="52" cy="72" r="3" fill="#0BD4FF"/><circle cx="68" cy="88" r="3" fill="#0BD4FF"/>
+  <circle cx="248" cy="162" r="3" fill="#0BD4FF"/><circle cx="234" cy="178" r="3" fill="#0BD4FF"/><circle cx="252" cy="176" r="3" fill="#0BD4FF"/>
+  <circle cx="272" cy="82" r="3" fill="#0BD4FF"/><circle cx="288" cy="96" r="3" fill="#0BD4FF"/>
+  <circle cx="114" cy="172" r="3" fill="#0BD4FF"/>
+  <circle cx="268" cy="224" r="3" fill="#0BD4FF"/><circle cx="254" cy="238" r="3" fill="#0BD4FF"/>
+
+  <!-- Legend -->
+  <circle cx="40" y="268" cx="40" cy="268" r="4" fill="#0BD4FF"/><text x="48" y="271" style="font-size:7.5px;fill:#003E4A">DER projects</text>
+  <circle cx="120" cy="268" r="5" fill="#00913F" fill-opacity="0.3" stroke="#00913F" stroke-width="1"/><text x="129" y="271" style="font-size:7.5px;fill:#00913F">Low congestion</text>
+  <circle cx="220" cy="268" r="5" fill="#E07000" fill-opacity="0.3" stroke="#E07000" stroke-width="1"/><text x="229" y="271" style="font-size:7.5px;fill:#E07000">High congestion</text>
+</svg></div>
+      <div class="chartcap">Same LMP, two scores. The congested node ($78) has high congestion value; the $32 node has mostly energy value. DERs near congested nodes score higher on congestion relief.</div>
+    </div>
+  </div>
+  <aside class="sn">These two scores share the same data source (hourly LMP) but decompose it differently. Energy arbitrage uses the energy component — the base commodity price that varies by time of day. Congestion relief uses the congestion component — the location-specific premium from transmission constraints. A DER at an uncongested node gets most of its LMP value from energy arbitrage; a DER behind a constrained line gets a large congestion premium. Six of seven ISOs publish full LMP decomposition; ERCOT must be derived from nodal-vs-hub spreads; non-ISO regions have neither.</aside>
+</div>
+
+<!-- 17 — CAPACITY / RA -->
+<div class="slide" data-slide="17">
+  <h3 class="reveal reveal-1">Grid Score &mdash; Component 4</h3>
+  <div class="gap-2"></div>
+  <h2 class="reveal reveal-2">Capacity / Resource Adequacy</h2>
+  <p class="reveal reveal-2" style="font-size:0.86rem;color:#6C8C93;margin-top:0.3rem;">The value of committing dispatchable capacity to meet peak demand.</p>
+  <div class="gap-2"></div>
+  <div class="row" style="align-items:flex-start;">
+    <div class="col reveal reveal-3" style="flex:0.92;">
+      <div class="formula">
+        <div class="label">Entirely deemed (settlement = forecast)</div>
+        <div class="fline" style="font-size:0.82rem;">value = $/kW-yr<span class="v">clearing</span> &times; nameplate &times; coincidence &times; scenario</div>
+      </div>
+      <div class="gap-2"></div>
+      <div class="card-label">Key points</div>
+      <ul style="font-size:0.84rem;">
+        <li><span class="strong">Geography:</span> Balancing Authority</li>
+        <li><span class="strong">Source:</span> CAISO RA (CPUC), PJM BRA auction clearing</li>
+        <li><span class="strong">Requirement:</span> device must prove dispatchability to grid operator</li>
+        <li><span class="strong">Scenarios:</span> low 0.85 &middot; mid 1.00 &middot; high 1.25</li>
+      </ul>
+    </div>
+    <div class="col reveal reveal-4">
+      <div class="info-card dark-card" style="margin-bottom:0.7rem;">
+        <h4>How it works</h4>
+        <p>The DER commits a fixed capacity (kW) to the grid operator. The clearing price sets $/kW-yr for that commitment. The coincidence factor derate reflects how much of nameplate the technology can reliably deliver (e.g. a 4-hr battery can't sustain output through an 8-hr peak).</p>
+      </div>
+      <div class="info-card">
+        <h4>No hourly settlement</h4>
+        <p>Unlike energy or congestion scores, there are no hourly price signals. Value is fixed at the auction clearing price &times; the promised capacity. This is a <b style="color:#003E4A;">contract-based</b> value stream, not a market-price-based one.</p>
+      </div>
+    </div>
+  </div>
+  <aside class="sn">Capacity/RA is entirely deemed — the value comes from published clearing prices (CAISO RA, PJM BRA), not from hourly settlement. The coincidence factor (e.g. 0.85 for a 4-hour battery) reflects the ELCC derate — the battery can't sustain output through arbitrarily long peaks. Scenario escalators capture load-growth uncertainty. Open question: how to calculate nameplate/computed size for HVAC and smart-thermostat systems.</aside>
+</div>
+
+<!-- 18 — ANCILLARY SERVICES -->
+<div class="slide" data-slide="18">
+  <h3 class="reveal reveal-1">Grid Score &mdash; Component 5</h3>
+  <div class="gap-2"></div>
+  <h2 class="reveal reveal-2">Ancillary Services</h2>
+  <p class="reveal reveal-2" style="font-size:0.86rem;color:#6C8C93;margin-top:0.3rem;">The value of providing frequency regulation and reserves to keep the grid balanced.</p>
+  <div class="gap-2"></div>
+  <div class="row" style="align-items:flex-start;">
+    <div class="col reveal reveal-3">
+      <div class="formula">
+        <div class="label">Entirely deemed (settlement = forecast)</div>
+        <div class="fline" style="font-size:0.82rem;">value = avg_AS_price<span class="v">$/kW-yr</span> &times; coincidence &times; nameplate &times; scenario</div>
+        <div class="gap-1"></div>
+        <div class="fsmall">$/kW-yr = $/MW-hr &times; 8760 / 1000 &nbsp;(sum across reg + reserves)</div>
+      </div>
+      <div class="gap-2"></div>
+      <div class="card-label">AS products</div>
+      <ul style="font-size:0.84rem;">
+        <li>Frequency regulation &mdash; seconds timescale</li>
+        <li>Spinning reserves &mdash; respond within 10 min</li>
+        <li>Non-spinning reserves &mdash; respond within 10&ndash;30 min</li>
+        <li>Emerging: uncertainty reserves (NYISO 2025)</li>
+      </ul>
+      <div class="gap-1"></div>
+      <p style="font-size:0.82rem;"><span class="strong">Only batteries on wholesale-bid participate</span> (all others = 0.00 coincidence)</p>
+    </div>
+    <div class="col reveal reveal-4">
+      <div class="info-card dark-card">
+        <h4>AS regions vary by ISO</h4>
+        <ul>
+          <li><b style="color:#fff;">CAISO</b> &mdash; 3 regions</li>
+          <li><b style="color:#fff;">MISO</b> &mdash; 7 regions</li>
+          <li><b style="color:#fff;">NYISO</b> &mdash; system-wide + NYC/LI locational</li>
+          <li><b style="color:#fff;">PJM, ERCOT, SPP</b> &mdash; primarily system-wide</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+  <aside class="sn">Ancillary services grow in importance as renewable penetration rises. This stream is entirely deemed — the $/kW-year benchmark is derived from average hourly AS clearing prices annualized (e.g. $3.85/MW-hr × 8760 / 1000 for PJM). Only batteries on wholesale-bid get a non-zero coincidence factor (0.60) because they must reserve state-of-charge headroom to be available for AS calls. The 0.60 factor captures the trade-off between AS availability and energy arbitrage.</aside>
+</div>
+
+<!-- 19 — T&D DEFERRAL -->
+<div class="slide" data-slide="19">
+  <h3 class="reveal reveal-1">Grid Score &mdash; Component 6</h3>
+  <div class="gap-2"></div>
+  <h2 class="reveal reveal-2">T&amp;D Deferral</h2>
+  <p class="reveal reveal-2" style="font-size:0.86rem;color:#6C8C93;margin-top:0.3rem;">The value of avoiding or deferring utility transmission and distribution infrastructure investment.</p>
+  <div class="gap-2"></div>
+  <div class="row" style="align-items:flex-start;">
+    <div class="col reveal reveal-3">
+      <div class="formula">
+        <div class="label">Entirely deemed (settlement = forecast)</div>
+        <div class="fline" style="font-size:0.82rem;">value = $/kW<span class="v">NWA filing</span> &times; nameplate &times; coincidence</div>
+      </div>
+      <div class="gap-2"></div>
+      <div class="card-label">Key points</div>
+      <ul style="font-size:0.84rem;">
+        <li><span class="strong">Geography:</span> defined by NWA RFP (transmission node / feeder)</li>
+        <li>Value = avoided capital expenditure on T&amp;D infrastructure</li>
+        <li><span class="strong">Fallbacks:</span> E3 ACC (California), Synapse PJM study</li>
+        <li><span class="strong">vs. Congestion Relief:</span> congestion uses wholesale price signals; T&amp;D Deferral is about physical infrastructure limits</li>
+      </ul>
+      <div class="gap-2"></div>
+      <div class="info-card">
+        <h4>Two distinct layers</h4>
+        <p><b style="color:#003E4A;">Transmission</b> &mdash; visible through LMP spreads; requires mapping DER location to relevant constraint</p>
+        <p style="margin-top:0.3rem;"><b style="color:#003E4A;">Distribution</b> &mdash; feeder/substation congestion via hosting capacity analysis</p>
+      </div>
+    </div>
+    <div class="col reveal reveal-4">
+      <div class="card-label">Data availability</div>
+      <ul class="traffic">
+        <li class="t-y"><b>CA, NY (distribution)</b> &mdash; available via hosting capacity maps</li>
+        <li class="t-p"><b>ISO regions (transmission)</b> &mdash; partially derivable from LMP patterns</li>
+        <li class="t-n"><b>Most other regions</b> &mdash; no public feeder-level or constraint data</li>
+        <li class="t-n"><b>Non-ISO regions</b> &mdash; unavailable</li>
+      </ul>
+      <div class="gap-2"></div>
+      <div class="emphasis">
+        <p style="font-size:0.84rem;">The most locally valuable score, and the hardest to compute. NWA programs in CA and NY already use similar logic.</p>
+      </div>
+    </div>
+  </div>
+  <aside class="sn">T&amp;D deferral is the most locally valuable score but the hardest to compute. Geography is defined by the specific NWA RFP. Settlement equals forecast — the value is entirely deemed from published $/kW rates. Fallback values (E3 $5-30/kW-yr; Synapse $15-25/kW-yr) are materially lower than published LNBA premium feeders, reflecting the regional vs. per-feeder distinction. Open question: are there ways beyond NWA filings and grid studies to estimate T&amp;D deferral value?</aside>
+</div>
+
+<!-- 20 — DIVIDER 04 -->
+<!-- 20 — SCORECARD -->
+<div class="slide" data-slide="20">
+  <h3 class="reveal reveal-1">Putting It Together</h3>
+  <div class="gap-2"></div>
+  <h2 class="reveal reveal-2">What a multi-score DER evaluation looks like</h2>
+  <div class="gap-1"></div>
+  <p class="reveal reveal-2" style="font-size:0.8rem;max-width:none;"><span class="strong">Project:</span> 500 kW Battery Storage (wholesale-bid), PJM (Northern Virginia) &nbsp;&middot;&nbsp; <span class="strong">Period:</span> January 2026 &nbsp;&middot;&nbsp; <span class="strong">Scenario:</span> mid</p>
+  <div class="gap-2"></div>
+  <div class="row" style="align-items:flex-start;">
+    <div class="col reveal reveal-3">
+      <div class="viz"><svg viewBox="0 0 420 230" xmlns="http://www.w3.org/2000/svg">
+  <!-- Stacked horizontal bar: total ~$59/kW-yr, bar width maps to 350px max -->
+  <!-- Scale: 350px = $60/kW-yr, so 1 $/kW-yr = 5.83px -->
+  <!-- Ancillary: $20.24 = 118px, Energy Arb: $13.50 = 79px, T&D: $9.25 = 54px, Capacity: $8.98 = 52px, Congestion: $7.00 = 41px, Tariff: $0 = 0px -->
+  <text x="36" y="20" style="font-size:10px;font-weight:700;fill:#003E4A">Grid Value Breakdown ($/kW-yr, post-coincidence)</text>
+
+  <!-- Stacked bar -->
+  <rect x="36" y="36" width="118" height="40" fill="#0BD4FF" rx="2"/>
+  <rect x="154" y="36" width="79" height="40" fill="#068DA9" rx="0"/>
+  <rect x="233" y="36" width="54" height="40" fill="#00913F" rx="0"/>
+  <rect x="287" y="36" width="52" height="40" fill="#B07D00" rx="0"/>
+  <rect x="339" y="36" width="41" height="40" fill="#6F9AA1" rx="0"/>
+  <!-- round right edge of last segment -->
+  <rect x="376" y="36" width="4" height="40" fill="#6F9AA1" rx="2"/>
+
+  <!-- Value labels inside bars -->
+  <text x="95" y="60" text-anchor="middle" style="font-size:10px;font-weight:700;fill:#fff">$20.24</text>
+  <text x="193" y="60" text-anchor="middle" style="font-size:10px;font-weight:700;fill:#fff">$13.50</text>
+  <text x="260" y="60" text-anchor="middle" style="font-size:9px;font-weight:700;fill:#fff">$9.25</text>
+  <text x="313" y="60" text-anchor="middle" style="font-size:9px;font-weight:700;fill:#fff">$8.98</text>
+  <text x="359" y="60" text-anchor="middle" style="font-size:9px;font-weight:700;fill:#fff">$7.00</text>
+
+  <!-- Legend -->
+  <rect x="36" y="96" width="14" height="14" fill="#0BD4FF" rx="2"/><text x="56" y="107" style="font-size:9.5px;fill:#003E4A;font-weight:600">Ancillary Services</text>
+  <rect x="175" y="96" width="14" height="14" fill="#068DA9" rx="2"/><text x="195" y="107" style="font-size:9.5px;fill:#003E4A;font-weight:600">Energy Arbitrage</text>
+  <rect x="306" y="96" width="14" height="14" fill="#00913F" rx="2"/><text x="326" y="107" style="font-size:9.5px;fill:#003E4A;font-weight:600">T&amp;D Deferral</text>
+  <rect x="36" y="118" width="14" height="14" fill="#B07D00" rx="2"/><text x="56" y="129" style="font-size:9.5px;fill:#003E4A;font-weight:600">Capacity / RA</text>
+  <rect x="175" y="118" width="14" height="14" fill="#6F9AA1" rx="2"/><text x="195" y="129" style="font-size:9.5px;fill:#003E4A;font-weight:600">Congestion Relief</text>
+  <rect x="306" y="118" width="14" height="14" fill="#D4DEE0" rx="2"/><text x="326" y="129" style="font-size:9.5px;fill:#99A5A8;font-weight:600">Tariff Savings: $0</text>
+
+  <!-- Total -->
+  <text x="36" y="160" style="font-size:11px;font-weight:700;fill:#003E4A">Total grid value: ~$59/kW-yr</text>
+  <text x="36" y="176" style="font-size:9px;fill:#6C8C93">= ~$29,500/yr for a 500 kW system at scenario mid</text>
+</svg></div>
+    </div>
+    <div class="col reveal reveal-4" style="flex:1.15;">
+      <div class="table-wrap">
+        <table class="compact">
+          <thead><tr><th>Score</th><th>Benchmark</th><th>Coinc.</th><th>$/kW-yr</th></tr></thead>
+          <tbody>
+            <tr><td>Carbon (Average)</td><td colspan="2">&mdash;</td><td class="num">0.38 tCO&#8322;/MWh</td></tr>
+            <tr><td>Carbon (Marginal)</td><td colspan="2">&mdash;</td><td class="num">0.52 tCO&#8322;/MWh</td></tr>
+            <tr><td>Ancillary Services</td><td class="num">$33.73</td><td class="num">0.60</td><td class="num">$20.24</td></tr>
+            <tr><td>Energy Arbitrage</td><td class="num">~$15</td><td class="num">0.90</td><td class="num">~$13.50</td></tr>
+            <tr><td>T&amp;D Deferral</td><td class="num">$18.50</td><td class="num">0.50</td><td class="num">~$9.25</td></tr>
+            <tr><td>Capacity / RA</td><td class="num">$10.56</td><td class="num">0.85</td><td class="num">~$8.98</td></tr>
+            <tr><td>Congestion Relief</td><td class="num">~$10</td><td class="num">0.70</td><td class="num">~$7.00</td></tr>
+            <tr><td>Tariff Savings</td><td class="num">&mdash;</td><td class="num">0.00</td><td class="num">$0</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+  <div class="gap-2"></div>
+  <div class="callout reveal reveal-5">
+    <p>This battery's grid value is dominated by ancillary services and energy arbitrage. Tariff savings is zero because wholesale-bid batteries have no retail tariff exposure. The stacked view shows where the value comes from &mdash; buyers weight streams by what they care about.</p>
+  </div>
+  <aside class="sn">The vision &mdash; every DER project gets a multi-dimensional scorecard in $/kW-year showing exactly where its value lies. The stacked bar makes the additive nature of the streams intuitive. Buyers weight the scores by what they care about: a utility worried about capacity focuses on RA; a corporate carbon buyer focuses on marginal emissions; a building owner cares about tariff savings. PJM/Dominion numbers from the McGee Doc methodology.</aside>
+</div>
+
+<!-- 25 — OPEN QUESTIONS -->
+<div class="slide" data-slide="21">
+  <h3 class="reveal reveal-1">Questions for the Alliance</h3>
+  <div class="gap-2"></div>
+  <h2 class="reveal reveal-2">What we need your input on</h2>
+  <div class="gap-4"></div>
+  <div class="qlist reveal reveal-3">
+    <div class="qitem"><div class="qnum">1</div><div><h4>How do you think about measuring capacity?</h4><p>What does &ldquo;capacity&rdquo; mean for different DER types? How should we handle resources that can&rsquo;t sustain output for extended periods?</p></div></div>
+    <div class="qitem"><div class="qnum">2</div><div><h4>Does $/kW-year make sense as a unit?</h4><p>Or should grid scores use a unit closer to energy (e.g. $/MWh, $/kWh)? What are the trade-offs for different market participants?</p></div></div>
+    <div class="qitem"><div class="qnum">3</div><div><h4>Do these six elements track for measuring grid impact?</h4><p>Are there value streams missing? Are any of these redundant or better combined? Does this decomposition match how you think about DER value?</p></div></div>
+  </div>
+  <aside class="sn">Three focused questions to frame the discussion. These are the foundational choices — get these right and the details (coincidence factors, data sources, scenario escalators) follow. Let the room drive which question gets the most time.</aside>
+</div>
+
+<!-- 26 — CLOSING -->
+<div class="slide dark" data-slide="22">
+  <h3 class="reveal reveal-1">In Closing</h3>
+  <div class="gap-2"></div>
+  <h1 class="reveal reveal-2" style="font-size:3rem;">Scoring the grid impact of DERs</h1>
+  <div class="gap-4"></div>
+  <div class="emphasis reveal reveal-3" style="background:rgba(11,212,255,0.07);">
+    <p style="color:#F0F4F5;">Hourly savings are the foundation. Carbon Scores measure emissions impact. Grid Scores measure the <span class="accent">$/kW-year value</span> a DER delivers across six value streams &mdash; making grid contributions <span class="accent">meaningful, comparable, and actionable</span> for different buyers.</p>
+  </div>
+  <div class="gap-4"></div>
+  <h3 class="reveal reveal-4">Next Steps</h3>
+  <div class="gap-2"></div>
+  <ul class="check-list reveal reveal-4">
+    <li>Alliance feedback on framework and open questions</li>
+    <li>Draft specification for Carbon Score and Grid Score computation</li>
+    <li>Pilot scoring on existing OpenEAC methodology outputs</li>
+  </ul>
+  <div class="spacer"></div>
+  <div class="divider-meta reveal reveal-5">openeac.org &nbsp;&nbsp;&middot;&nbsp;&nbsp; methods.openeac.org</div>
+  <aside class="sn">Close on the takeaway and next steps. The ask is concrete: feedback now, a draft spec next, then a pilot on real methodology outputs.</aside>
+</div>
+
+<!-- 27 — APPENDIX DIVIDER -->
+<div class="slide dark divider-slide" data-slide="23">
+  <div class="bg-numeral reveal reveal-1">A</div>
+  <div class="eyebrow-rule reveal reveal-1"></div>
+  <h3 class="reveal reveal-2">Reference</h3>
+  <div class="gap-2"></div>
+  <h1 class="reveal reveal-2">Appendix</h1>
+  <div class="gap-3"></div>
+  <p class="large reveal reveal-3">Formula reference, data sources, and the NREL ELCC research.</p>
+  <aside class="sn">Backup slides for Q&A — not part of the main 20-25 minutes.</aside>
+</div>
+
+
+</div><!-- end deck -->
+
+<div class="progress" id="progress2" style="display:none;"></div>
+<div class="hint">&larr; &rarr; navigate &nbsp;&middot;&nbsp; N &mdash; speaker notes</div>
+<div class="nav">
+  <button class="nav-btn" onclick="go(-1)" aria-label="Previous">&#8592;</button>
+  <span class="nav-counter"><span id="cur">1</span> / <span id="tot">30</span></span>
+  <button class="nav-btn" onclick="go(1)" aria-label="Next">&#8594;</button>
+</div>
+
+<div id="notes-panel">
+  <div class="np-head">Speaker Notes &mdash; Slide <span id="np-num">1</span></div>
+  <div class="np-body" id="np-body"></div>
+</div>
+
+<script>
+const slides = document.querySelectorAll('.slide');
+const total = slides.length;
+const params = new URLSearchParams(window.location.search);
+let cur = Math.max(1, Math.min(total, parseInt(params.get('slide'), 10) || 1));
+slides[0].classList.remove('active');
+slides[cur - 1].classList.add('active');
+const logoDark = document.getElementById('logo-dark');
+const logoLight = document.getElementById('logo-light');
+const progress = document.getElementById('progress');
+let notesOn = false;
+document.getElementById('tot').textContent = total;
+
+function render() {
+  const isDark = slides[cur - 1].classList.contains('dark');
+  logoDark.style.opacity = isDark ? '0' : '1';
+  logoLight.style.opacity = isDark ? '1' : '0';
+  document.getElementById('cur').textContent = cur;
+  progress.style.width = (cur / total * 100) + '%';
+  const note = slides[cur - 1].querySelector('.sn');
+  document.getElementById('np-num').textContent = cur;
+  document.getElementById('np-body').textContent = note ? note.textContent : 'No notes for this slide.';
+  const url = new URL(window.location);
+  url.searchParams.set('slide', cur);
+  history.replaceState(null, '', url);
+}
+
+function go(d) {
+  const n = Math.max(1, Math.min(total, cur + d));
+  if (n === cur) return;
+  slides[cur - 1].classList.remove('active');
+  cur = n;
+  slides[cur - 1].classList.add('active');
+  render();
+}
+
+function toggleNotes() {
+  notesOn = !notesOn;
+  document.getElementById('notes-panel').classList.toggle('show', notesOn);
+}
+
+document.addEventListener('keydown', e => {
+  if (e.key === 'ArrowRight' || e.key === ' ' || e.key === 'PageDown') { e.preventDefault(); go(1); }
+  if (e.key === 'ArrowLeft' || e.key === 'PageUp') { e.preventDefault(); go(-1); }
+  if (e.key === 'Home') { e.preventDefault(); go(1 - cur); }
+  if (e.key === 'End') { e.preventDefault(); go(total - cur); }
+  if (e.key === 'n' || e.key === 'N') { e.preventDefault(); toggleNotes(); }
+});
+
+let tx = 0;
+document.addEventListener('touchstart', e => tx = e.touches[0].clientX);
+document.addEventListener('touchend', e => {
+  const d = tx - e.changedTouches[0].clientX;
+  if (Math.abs(d) > 50) go(d > 0 ? 1 : -1);
+});
+
+render();
+</script>
+</body>
+</html>

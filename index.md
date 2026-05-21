@@ -1,5 +1,5 @@
 ---
-layout: home
+layout: default
 ---
 
 {% include_relative README.md %}
@@ -32,5 +32,13 @@ layout: home
 | ------------------ | ------------------------------------------------ | ------------  | ------------ |
 | Decarbonization Accounting | 2025-02-07 | [link]({{ site.baseurl }}/methodologies/basic-decarbonization-accounting/2025-02-07) |
 | Demand Efficiency Calculations | 2026-02-19* | [link]({{ site.baseurl }}/methodologies/demand-efficiency-calculations/2026-02-19) |
+
+## Meeting Presentations
+
+| Date | Topic | Format |
+| ---- | ----- | ------ |
+| 2026 Q2 | Grid Score & Carbon Score | [slides]({{ site.baseurl }}/meetings/2026-Q2_GridScore_CarbonScore.html) |
+| 2026 Q1 | DER Capacity | [pdf]({{ site.baseurl }}/meetings/2026-Q1_DER_Capacity.pdf) |
+| 2025 Q4 | Load Shifting & Demand Response | [pdf]({{ site.baseurl }}/meetings/2025-Q4_LoadShifting_DemandResponse.pdf) |
 
 {% include_relative MAINTAINERS.md %}
