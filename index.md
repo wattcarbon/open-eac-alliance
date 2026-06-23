@@ -32,6 +32,7 @@ layout: default
 | ------------------ | ------------------------------------------------ | ------------  | ------------ |
 | Decarbonization Accounting | 2025-02-07 | [link]({{ site.baseurl }}/methodologies/basic-decarbonization-accounting/2025-02-07) |
 | Demand Efficiency Calculations | 2026-02-19* | [link]({{ site.baseurl }}/methodologies/demand-efficiency-calculations/2026-02-19) |
+| Utility Bill Savings | 2026-06-23* | [link]({{ site.baseurl }}/methodologies/utility-bill-savings/2026-06-23) |
 
 ## Meeting Presentations
 
