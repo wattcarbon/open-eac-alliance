@@ -1,0 +1,52 @@
+# Preview this site as it will be served:
+#
+#   docker compose up          then open http://localhost:4000
+#   docker compose run --rm site jekyll build --destination /tmp/_site
+#
+# Serve it through `jekyll serve` rather than pointing a file server at a built
+# _site. GitHub Pages resolves an extensionless request such as
+# /methodologies/whole-building-metered/2025-02-07 to the .html file it
+# generated, and every link on this site is extensionless. A plain file server
+# returns 404 for all of them, which reads as a site full of broken links when
+# nothing is broken. `jekyll serve` resolves them the way Pages does.
+
+services:
+  site:
+    build: .
+    ports:
+      - "${SITE_PORT:-4000}:4000"
+    volumes:
+      - .:/site
+    environment:
+      # Stops jekyll-github-metadata probing the GitHub API to work out which
+      # repository this is. The theme reads site.github, so without this every
+      # build waits on an unauthenticated API call.
+      PAGES_REPO_NWO: wattcarbon/open-eac-alliance
+      # In its development environment `jekyll serve` overwrites site.url with
+      # its own listening address. jekyll-redirect-from writes absolute URLs
+      # into every methodology page, so without production every redirect would
+      # point at http://0.0.0.0:4000 whatever SITE_URL says. Pages also builds
+      # with production.
+      JEKYLL_ENV: production
+      SITE_URL: ${SITE_URL:-http://localhost:4000}
+    # The generated site goes to /tmp, and _config.yml puts the Sass cache
+    # there too, so previewing never writes into the checkout.
+    #
+    # force_polling: the checkout arrives over a bind mount, where inotify is
+    # not dependable, so without it an edit does not rebuild.
+    command:
+      - sh
+      - -euc
+      - |
+        printf 'url: "%s"\nbaseurl: ""\n' "$${SITE_URL}" > /tmp/preview.yml
+        exec jekyll serve \
+          --host 0.0.0.0 --port 4000 \
+          --config _config.yml,/tmp/preview.yml \
+          --destination /tmp/_site \
+          --force_polling
+    healthcheck:
+      test: ["CMD", "curl", "-fsS", "-o", "/dev/null", "http://localhost:4000/"]
+      interval: 5s
+      timeout: 5s
+      retries: 24
+      start_period: 30s
