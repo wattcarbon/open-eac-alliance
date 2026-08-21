@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="en">
+<meta charset="utf-8">
+<title>Putting a Building on the Grid</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<style>
+ul.defs{list-style:none;margin:0 0 11px;padding:0;display:grid;
+  grid-template-columns:repeat(4,minmax(0,1fr));gap:11px}
+ul.defs li{background:var(--panel);border:1px solid var(--line);border-radius:11px;
+  padding:11px 14px;border-top:3px solid var(--none)}
+ul.defs b{display:block;font-size:15px;font-weight:660;margin-bottom:5px}
+ul.defs span{display:block;font-size:12px;line-height:1.42;color:var(--muted)}
+ul.defs.n li{border-top-color:var(--cong)}
+ul.defs.r li{border-top-color:var(--load)}
+ul.defs.s li{border-top-color:var(--out);grid-column:span 1}
+ul.defs.s{grid-template-columns:repeat(4,minmax(0,1fr))}
+sub{font-size:.72em}
+@media (max-width:900px){ul.defs,ul.defs.s{grid-template-columns:1fr 1fr}}
+
+.groups{display:flex;flex-direction:column;gap:24px;max-width:1240px;margin:0 auto;
+  width:100%}
+.lbl.left{text-align:left;margin:0 0 11px}
+ul.chips{list-style:none;margin:0;padding:0;display:flex;gap:11px;flex-wrap:wrap}
+ul.chips li{font-size:16px;padding:11px 18px;border-radius:11px;background:var(--panel);
+  border:1px solid var(--line)}
+.grp:first-child ul.chips li{border-bottom:3px solid var(--cong)}
+.grp:last-child ul.chips li{border-bottom:3px solid var(--out)}
+
+.lbl{display:block;font-family:var(--mono);font-size:11px;letter-spacing:.14em;
+  text-transform:uppercase;color:var(--muted);font-weight:600;margin:38px auto 13px;
+  text-align:center}
+ul.streams{list-style:none;margin:0 auto;padding:0;display:flex;gap:12px;flex-wrap:wrap;
+  justify-content:center;max-width:1100px}
+ul.streams li{font-size:16px;padding:11px 18px;border-radius:11px;background:var(--panel);
+  border:1px solid var(--line);border-left:4px solid var(--none)}
+ul.streams.h1 li{border-left-color:var(--cong)}
+ul.streams.h2 li{border-left-color:var(--load)}
+ul.streams.h3 li{border-left-color:var(--out)}
+
+
+:root{ --paper:#f5f6f8; --panel:#ffffff; --ink:#282e34; --muted:#5f6a75; --line:#b3bcc4;
+  --cong:#3a6ea5; --cong-fill:#e9f1f9; --load:#b27d24; --load-fill:#fbf2df;
+  --bs:#2f8f6b; --bs-fill:#e6f4ee; --out:#7d4f9c; --out-fill:#f1e9f6;
+  --none:#8a939c; --none-fill:#eef1f3;
+  --cong-fill-fg:#2f5d8c; --load-fill-fg:#7d5512; --bs-fill-fg:#1f6f50;
+  --out-fill-fg:#6b4a86;
+  --sans:system-ui,-apple-system,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+  --mono:ui-monospace,"SF Mono","JetBrains Mono",Menlo,Consolas,monospace; }
+@media (prefers-color-scheme: dark){ :root:not([data-theme="light"]){
+  --paper:#14181c; --panel:#1b2126; --ink:#e6eaee; --muted:#9aa6b1; --line:#3a444d;
+  --cong:#7fb3e6; --load:#e0a94a; --bs:#58c79a; --out:#c9a0e0; --none:#b9c2ca;
+  --cong-fill:#16283a; --load-fill:#2e2415; --bs-fill:#122a22; --out-fill:#241a2e;
+  --none-fill:#20262b; --cong-fill-fg:#7fb3e6; --load-fill-fg:#e0a94a;
+  --bs-fill-fg:#58c79a; --out-fill-fg:#c9a0e0; } }
+:root[data-theme="dark"]{
+  --paper:#14181c; --panel:#1b2126; --ink:#e6eaee; --muted:#9aa6b1; --line:#3a444d;
+  --cong:#7fb3e6; --load:#e0a94a; --bs:#58c79a; --out:#c9a0e0; --none:#b9c2ca;
+  --cong-fill:#16283a; --load-fill:#2e2415; --bs-fill:#122a22; --out-fill:#241a2e;
+  --none-fill:#20262b; --cong-fill-fg:#7fb3e6; --load-fill-fg:#e0a94a;
+  --bs-fill-fg:#58c79a; --out-fill-fg:#c9a0e0; }
+
+*{box-sizing:border-box}
+html,body{height:100%}
+body{margin:0;background:var(--paper);color:var(--ink);font-family:var(--sans);
+  font-size:16px;line-height:1.55;-webkit-font-smoothing:antialiased;overflow:hidden}
+.deck{height:100%;position:relative}
+.slide{position:absolute;inset:0;display:none;flex-direction:column;
+  padding:52px 60px 70px;overflow-y:auto}
+.slide.on{display:flex}
+.eb{font-family:var(--mono);font-size:12px;letter-spacing:.15em;text-transform:uppercase;
+  color:var(--muted);font-weight:600}
+h2{font-size:clamp(26px,3.2vw,40px);line-height:1.1;margin:8px 0 0;font-weight:650;
+  letter-spacing:-.02em}
+.body{flex:1;min-height:0;display:flex;flex-direction:column;justify-content:center}
+.body:has(.groups){justify-content:flex-start;padding-top:30px}
+.kicker{color:var(--muted);font-size:15px;max-width:88ch;margin:26px auto 0;text-align:center}
+.take{position:absolute;left:60px;right:190px;bottom:24px;color:var(--muted);font-size:14.5px;
+  max-width:100ch}
+
+.slide.t1{justify-content:center;padding-left:84px}
+.slide.t1 h1{font-size:clamp(38px,6.2vw,74px);line-height:1.03;margin:0 0 22px;
+  font-weight:660;letter-spacing:-.03em;max-width:20ch}
+.slide.t1 .lede{font-size:clamp(17px,1.9vw,22px);color:var(--muted);max-width:54ch;margin:0}
+.rule{width:82px;height:5px;background:var(--cong);border-radius:3px;margin:0 0 30px}
+
+svg.flow{display:block;width:100%;max-width:1300px;height:auto;margin:0 auto}
+.nt{font-size:19px;font-weight:680;fill:var(--ink);text-anchor:middle}
+.ns{font-size:13px;text-anchor:middle}
+.al{font-family:var(--mono);font-size:12px;fill:var(--muted);text-anchor:middle;
+  letter-spacing:.06em}
+.ed{fill:none;stroke:var(--line);stroke-width:2.2;marker-end:url(#ar)}
+
+.cards{display:grid;grid-template-columns:repeat(3,1fr);gap:24px;max-width:1240px;
+  margin:0 auto;width:100%}
+.card{background:var(--panel);border:1px solid var(--line);border-radius:15px;
+  padding:24px 26px;border-top:5px solid var(--none);display:flex;flex-direction:column}
+.card h3{font-size:23px;margin:8px 0 12px;font-weight:660;letter-spacing:-.01em}
+.card .q{margin:0 0 16px;font-size:15.5px;color:var(--ink)}
+.card ul{margin:auto 0 0;padding-left:19px;font-size:14.5px;color:var(--muted)}
+.card li{margin:0 0 5px}
+.c1{border-top-color:var(--cong)} .c1 .eb{color:var(--cong-fill-fg)}
+.c2{border-top-color:var(--load)} .c2 .eb{color:var(--load-fill-fg)}
+.c3{border-top-color:var(--out)}  .c3 .eb{color:var(--out-fill-fg)}
+
+.over{text-align:center;max-width:80ch;margin:0 auto}
+.over .lead{font-size:20px;margin:0 0 26px;color:var(--ink)}
+.over .url{margin:0 0 30px}
+.over .url a{font-family:var(--mono);font-size:clamp(13px,1.5vw,18px);color:var(--cong-fill-fg);
+  text-decoration:none;border-bottom:2px solid var(--cong);padding-bottom:3px;
+  word-break:break-all}
+.look{list-style:none;padding:0;margin:0;display:flex;gap:14px;justify-content:center;
+  flex-wrap:wrap}
+.look li{background:var(--panel);border:1px solid var(--line);border-radius:11px;
+  padding:11px 17px;font-size:14.5px;color:var(--muted)}
+.look b{color:var(--ink)}
+
+.bar{position:absolute;right:28px;bottom:22px;display:flex;align-items:center;gap:14px;
+  font-family:var(--mono);font-size:12.5px;color:var(--muted)}
+.bar button{appearance:none;border:1px solid var(--line);background:var(--panel);
+  color:var(--ink);border-radius:9px;width:32px;height:30px;cursor:pointer;font-size:15px;
+  line-height:1}
+.bar button:hover{border-color:var(--cong)}
+.bar button:disabled{opacity:.4;cursor:default}
+.dots{position:absolute;left:60px;bottom:26px;display:flex;gap:7px}
+.dots i{width:26px;height:4px;border-radius:2px;background:var(--line);cursor:pointer}
+.dots i.on{background:var(--cong)}
+:focus-visible{outline:2px solid var(--cong);outline-offset:2px}
+@media (max-width:900px){
+  .slide{padding:28px 22px 64px}
+  .cards{grid-template-columns:1fr}
+  .take{left:22px;right:22px;bottom:48px}
+  .dots{left:22px}
+}
+</style>
+<svg width="0" height="0" aria-hidden="true"><defs>
+<marker id="ar" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7"
+        orient="auto-start-reverse"><path d="M0 0 L10 5 L0 10 z" fill="#8a939c"/></marker>
+</defs></svg>
+<div class="deck"><section class="slide t1 on" data-i="0"><div class="rule"></div><h1>Putting a building on the grid</h1><p class="lede">Give us an address, and we look up three different kinds of information about the grid underneath it.</p></section><section class="slide" data-i="1"><span class="eb">The output</span><h2>What we work out about a site</h2><div class="body">
+<div class="groups">
+  <div class="grp">
+    <span class="lbl left">Value streams &mdash; what a DER can earn</span>
+    <ul class="defs n">
+      <li><b>Energy arbitrage</b><span>Store power when it is cheap, give it back when
+        it is expensive.</span></li>
+      <li><b>Congestion relief</b><span>Ease a pinch point on the network, in the hours
+        it is actually pinched.</span></li>
+      <li><b>Marginal loss</b><span>Deliver power near where it is used, so less of it
+        is lost on the way.</span></li>
+      <li><b>Avoided emissions</b><span>The CO<sub>2</sub>e never emitted, because
+        something dirtier stayed off.</span></li>
+    </ul>
+    <ul class="defs r">
+      <li><b>Capacity</b><span>Paid to be there at the peak, so the grid can build less
+        firm generation.</span></li>
+      <li><b>Ancillary services</b><span>Paid to help hold the grid steady second to
+        second.</span></li>
+      <li><b>T&amp;D deferral</b><span>Put off a wire, transformer or substation upgrade
+        the utility would pay for.</span></li>
+      <li><b>Tariff savings</b><span>Money off the customer's own bill, under their own
+        rate plan.</span></li>
+    </ul>
+  </div>
+  <div class="grp">
+    <span class="lbl left">Scores &mdash; what the site is like</span>
+    <ul class="defs s">
+      <li><b>Load score</b><span>How hard the local load peaks, and how much building
+        stock sits nearby.</span></li>
+      <li><b>Congestion score</b><span>How much the local price swings when the network
+        is constrained.</span></li>
+      <li><b>DER need</b><span>Which kind of flexibility the area is short of.</span></li>
+    </ul>
+  </div>
+</div>
+</div></section><section class="slide" data-i="2"><span class="eb">The idea</span><h2>Three kinds of information</h2><div class="body">
+<div class="cards">
+  <div class="card c1">
+    <span class="eb">Point</span>
+    <h3>Nodal pricing</h3>
+    <p class="q">What is power worth right here, hour by hour?</p>
+
+  </div>
+  <div class="card c2">
+    <span class="eb">Region</span>
+    <h3>Regional value</h3>
+    <p class="q">What does this region pay for grid services?</p>
+
+  </div>
+  <div class="card c3">
+    <span class="eb">Area</span>
+    <h3>Local load</h3>
+    <p class="q">What do the loads around here look like?</p>
+
+  </div>
+</div>
+<p class="kicker">Three separate look-ups. Any one can come back empty while the other
+two answer.</p>
+</div></section><section class="slide" data-i="3"><span class="eb">One of three &middot; a point</span><h2>Nodal pricing</h2><div class="body"><svg class="flow" viewBox="0 0 1124 188" role="img" aria-label="How it is found"><rect x="28" y="28" width="300" height="132" rx="14" fill="var(--cong-fill)" stroke="var(--cong)" stroke-width="2"/><text class="nt" x="178.0" y="66">An address</text><path class="ed" d="M328,94.0 L412,94.0"/><text class="al" x="370.0" y="82.0">then</text><rect x="412" y="28" width="300" height="132" rx="14" fill="var(--cong-fill)" stroke="var(--cong)" stroke-width="2"/><text class="nt" x="562.0" y="66">The nearest priced point</text><text class="ns" x="562.0" y="94" fill="var(--cong-fill-fg)">Found by following the power lines.</text><path class="ed" d="M712,94.0 L796,94.0"/><text class="al" x="754.0" y="82.0">gives us</text><rect x="796" y="28" width="300" height="132" rx="14" fill="var(--bs-fill)" stroke="var(--bs)" stroke-width="3"/><text class="nt" x="946.0" y="66">Hour-by-hour prices</text><text class="ns" x="946.0" y="94" fill="var(--bs-fill-fg)">Energy, congestion and losses.</text></svg><span class="lbl">What it gives us</span><ul class="streams h1"><li>Energy arbitrage</li><li>Congestion relief</li><li>Marginal loss</li><li>Avoided emissions</li></ul><span class="lbl">One worked example</span><ul class="look"><li><b>Mountain View, California</b> &mdash; the nearest priced point is <b>WHISMAN_1_N001</b>, 1,282 m away</li><li>Reached along <b>27 conductor spans</b> through 16 nodes, not in a straight line</li><li>It hangs off <b>WHISMAN</b> substation, 115 kV, carrying two lines</li><li>That node sits in the <b>91st percentile</b> for congestion</li></ul></div><p class="take">The nearest priced point is the nearest one by cable, not the closest one on a map.</p></section><section class="slide" data-i="4"><span class="eb">Two of three &middot; a region</span><h2>Regional value</h2><div class="body"><svg class="flow" viewBox="0 0 1124 188" role="img" aria-label="How it is found"><rect x="28" y="28" width="300" height="132" rx="14" fill="var(--load-fill)" stroke="var(--load)" stroke-width="2"/><text class="nt" x="178.0" y="66">An address</text><path class="ed" d="M328,94.0 L412,94.0"/><text class="al" x="370.0" y="82.0">then</text><rect x="412" y="28" width="300" height="132" rx="14" fill="var(--load-fill)" stroke="var(--load)" stroke-width="2"/><text class="nt" x="562.0" y="66">The region it sits inside</text><text class="ns" x="562.0" y="94" fill="var(--load-fill-fg)">The utility or market area around it.</text><path class="ed" d="M712,94.0 L796,94.0"/><text class="al" x="754.0" y="82.0">gives us</text><rect x="796" y="28" width="300" height="132" rx="14" fill="var(--bs-fill)" stroke="var(--bs)" stroke-width="3"/><text class="nt" x="946.0" y="66">The published price</text><text class="ns" x="946.0" y="94" fill="var(--bs-fill-fg)">What that region pays for each service.</text></svg><span class="lbl">What it gives us</span><ul class="streams h2"><li>Capacity</li><li>Ancillary services</li><li>T&amp;D deferral</li><li>Tariff savings</li></ul><span class="lbl">One worked example</span><ul class="look"><li><b>Mountain View, California</b> &mdash; <b>five territories</b> cover it, and they overlap</li><li><b>Capacity</b> alone is carried by four of them, at four different grains</li><li>The finest of those is <b>local_area</b>, so that is the one it is priced at</li></ul></div><p class="take">These prices cover a whole area, so what matters is which area you are in.</p></section><section class="slide" data-i="5"><span class="eb">Three of three &middot; an area</span><h2>Local load</h2><div class="body"><svg class="flow" viewBox="0 0 1124 188" role="img" aria-label="How it is found"><rect x="28" y="28" width="300" height="132" rx="14" fill="var(--out-fill)" stroke="var(--out)" stroke-width="2"/><text class="nt" x="178.0" y="66">An address</text><path class="ed" d="M328,94.0 L412,94.0"/><text class="al" x="370.0" y="82.0">then</text><rect x="412" y="28" width="300" height="132" rx="14" fill="var(--out-fill)" stroke="var(--out)" stroke-width="2"/><text class="nt" x="562.0" y="66">The nearest substation</text><text class="ns" x="562.0" y="94" fill="var(--out-fill-fg)">And the buildings around it.</text><path class="ed" d="M712,94.0 L796,94.0"/><text class="al" x="754.0" y="82.0">gives us</text><rect x="796" y="28" width="300" height="132" rx="14" fill="var(--bs-fill)" stroke="var(--bs)" stroke-width="3"/><text class="nt" x="946.0" y="66">What the area needs</text><text class="ns" x="946.0" y="94" fill="var(--bs-fill-fg)">How the local load peaks.</text></svg><span class="lbl">What it gives us</span><ul class="streams h3"><li>How much the area peaks</li><li>How much building stock is nearby</li><li>Which kind of DER would help</li></ul></div><p class="take">This one always answers. Every address has a nearest substation.</p></section><section class="slide" data-i="6"><span class="eb">Examples</span><h2>See it on the map</h2><div class="body">
+<div class="over">
+  <p class="lead">Six real addresses, and what each one can be given.</p>
+  <p class="url"><a href="2026-Q3_Grid_Node_Siting_Map.html">Grid node siting map</a></p>
+  <ul class="look">
+    <li><b>Mountain View</b> &mdash; all three answer</li>
+    <li><b>Houston</b> &mdash; priced from further away</li>
+    <li><b>Atlanta</b> &mdash; no prices, still a load answer</li>
+  </ul>
+</div>
+</div></section>
+<div class="dots"><i data-g="0"></i><i data-g="1"></i><i data-g="2"></i><i data-g="3"></i><i data-g="4"></i><i data-g="5"></i><i data-g="6"></i></div>
+<div class="bar"><button id="p" aria-label="Previous">&#8592;</button>
+<span id="n">1 / 7</span>
+<button id="x" aria-label="Next">&#8594;</button></div>
+</div>
+<script>
+var S=[].slice.call(document.querySelectorAll('.slide')),
+    D=[].slice.call(document.querySelectorAll('.dots i')),c=0;
+function go(i){c=Math.max(0,Math.min(S.length-1,i));
+  S.forEach(function(s,k){s.classList.toggle('on',k===c);});
+  D.forEach(function(d,k){d.classList.toggle('on',k===c);});
+  document.getElementById('n').textContent=(c+1)+' / '+S.length;
+  document.getElementById('p').disabled=(c===0);
+  document.getElementById('x').disabled=(c===S.length-1);}
+document.getElementById('p').onclick=function(){go(c-1);};
+document.getElementById('x').onclick=function(){go(c+1);};
+D.forEach(function(d){d.onclick=function(){go(+d.dataset.g);};});
+document.addEventListener('keydown',function(e){
+  if(e.key==='ArrowRight'||e.key===' '||e.key==='PageDown'){e.preventDefault();go(c+1);}
+  if(e.key==='ArrowLeft'||e.key==='PageUp'){e.preventDefault();go(c-1);}
+  if(e.key==='Home')go(0); if(e.key==='End')go(S.length-1);});
+go(0);
+</script>
+</html>
