@@ -1,0 +1,7 @@
+# Jekyll build output. The preview container writes these to /tmp, but a build
+# run outside it lands here.
+_site/
+.jekyll-cache/
+.jekyll-metadata
+.sass-cache/
+vendor/

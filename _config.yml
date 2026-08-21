@@ -2,6 +2,10 @@ title: OpenEAC Alliance
 description: "Repository for M&V methodology for EACs in WEATS"
 theme: jekyll-theme-primer
 markdown: kramdown
+# Keep the Sass compiler's cache out of the checkout, so building the site
+# locally leaves no untracked directory behind. Does not affect the output.
+sass:
+  cache_location: /tmp/.sass-cache
 defaults:
   -
     scope:
