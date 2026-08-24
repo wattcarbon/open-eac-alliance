@@ -38,7 +38,7 @@ layout: default
 
 | Date | Topic | Format |
 | ---- | ----- | ------ |
-| 2026 Q3 | DERs and the Grid | [pdf]({{ site.baseurl }}/meetings/2026-Q3_DERs_and_the_Grid.pdf), [demo]({{ site.baseurl }}/meetings/2026-Q3_Putting_a_Building_on_the_Grid.html), [map]({{ site.baseurl }}/meetings/2026-Q3_Grid_Node_Siting_Map.html) |
+| 2026 Q3 | DERs and the Grid | [pdf]({{ site.baseurl }}/meetings/2026-Q3_DERs_and_the_Grid.pdf), [demo]({{ site.baseurl }}/meetings/2026-Q3_Putting_a_Building_on_the_Grid.html) |
 | 2026 Q2 | Grid Score & Carbon Score | [slides]({{ site.baseurl }}/meetings/2026-Q2_GridScore_CarbonScore.html) |
 | 2026 Q1 | DER Capacity | [pdf]({{ site.baseurl }}/meetings/2026-Q1_DER_Capacity.pdf) |
 | 2025 Q4 | Load Shifting & Demand Response | [pdf]({{ site.baseurl }}/meetings/2025-Q4_LoadShifting_DemandResponse.pdf) |
