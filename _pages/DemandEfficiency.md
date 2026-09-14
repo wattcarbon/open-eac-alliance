@@ -1,4 +1,10 @@
 ---
 permalink: /methodologies/demand-efficiency-calculations/2026-02-19
-redirect_to: https://docs.google.com/document/d/16mz9JnTwYhMGlCiRJmliSkGI-DqxULF62bMU24rplNk/view
+title: "Demand Efficiency Calculations"
+source: google_doc
+google_doc_id: 16mz9JnTwYhMGlCiRJmliSkGI-DqxULF62bMU24rplNk
+layout: methodology
+category: related
+published: 2026-02-19
+status: comment
 ---

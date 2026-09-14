@@ -1,4 +1,10 @@
 ---
 permalink: /methodologies/utility-bill-savings/2026-06-23
-redirect_to: https://docs.google.com/document/d/1KAVmeMmATZQ-KbziCy6Q8s4haXGrgH9GZDt06w-BR9Q/view
+title: "Utility Bill Savings"
+source: google_doc
+google_doc_id: 1KAVmeMmATZQ-KbziCy6Q8s4haXGrgH9GZDt06w-BR9Q
+layout: methodology
+category: related
+published: 2026-06-23
+status: comment
 ---

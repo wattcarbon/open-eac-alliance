@@ -4,36 +4,57 @@ layout: default
 
 {% include_relative README.md %}
 
+{% comment %}
+Every table below is built from the front matter of the pages in _pages. A
+methodology is therefore published by adding one file, and its status is stated
+in one place. A page with no `category` is reachable by its permalink but is not
+advertised here, which is how it was before these tables were generated.
+
+Liquid only, no plugin: GitHub Pages builds this repository with its legacy
+pipeline, which runs a fixed plugin list.
+{% endcomment %}
+{% assign methodologies = site.pages | where_exp: "p", "p.category" | sort: "published" %}
+
 ## Methodologies
 
 ### Standard M&V Methodologies
 
 | Methodology | External Entity | URL |
 | ------------------ | ------------------ | ------------ |
-| Whole-Building Weather Normalized Metered (OpenDSM EEMeter) | [LF Energy](https://www.lfenergy.org) | [link]({{ site.baseurl }}/methodologies/whole-building-metered/2025-02-07) |
+{% for p in methodologies %}{% if p.category == "standard" %}| {{ p.title }} | [{{ p.entity_name }}]({{ p.entity_url }}) | [link]({{ site.baseurl }}{{ p.permalink }}) |
+{% endif %}{% endfor %}
 
+### Metered M&V Methodologies
 
-### Custom M&V Methodologies
+The impact is measured from the meter or the sensors of the Asset itself, and
+the Counterfactual is adjusted for the weather that occurred.
 
  An asterisk (\*) Represents that the methodology is within the comment period.
 
 | Methodology | Granularity | Published Date | URL |
 | ------------------ | ------------------------------------------------ | ------------  | ------------ |
-| Self-Consumed solar PV generation | Device | 2024-11-04 | [link]({{ site.baseurl }}/methodologies/small-scale-solar-self-consumption-methodology/2024-11-04) |
-| Metered Lighting Upgrade | Device | 2025-02-07 | [link]({{ site.baseurl }}/methodologies/device-level-metered-lighting/2025-02-07) |
-| Seasonal Consumption Controls | Device | 2025-08-21 | [link]({{ site.baseurl }}/methodologies/seasonal-controls/2025-08-21) |
-| Weather Normalized Metered+Modeled EE/Electrification | Building | 2025-02-07 | [link]({{ site.baseurl }}/methodologies/whole-building-metered-or-deemed/2025-02-07) |
-| Weather Normalized Metered Demand Response | Building | 2025-10-02* | [link]({{ site.baseurl }}/methodologies/whole-building-metered-demand-response/2025-10-02) |
-| Weather Normalized Metered Load Shifting | Building | 2025-10-02* | [link]({{ site.baseurl }}/methodologies/whole-building-metered-load-shifting/2025-10-02) |
-| Heat Pump with Sensors/Thermal Storage | Device | 2026-02-04* | [link]({{ site.baseurl }}/methodologies/device-level-sensors-electrification/2026-02-04) |
+{% for p in methodologies %}{% if p.category == "custom" and p.evidence != "modeled" %}| {{ p.title }} | {{ p.granularity }} | {{ p.published }}{% if p.status == "comment" %}*{% endif %} | [link]({{ site.baseurl }}{{ p.permalink }}) |
+{% endif %}{% endfor %}
+
+### Modeled M&V Methodologies
+
+The Asset carries no meter data for the end use, so the impact is derived from
+the attributes of the building and a reference load profile. A methodology here
+applies where no metered methodology can.
+
+ An asterisk (\*) Represents that the methodology is within the comment period.
+
+| Methodology | Granularity | Published Date | URL |
+| ------------------ | ------------------------------------------------ | ------------  | ------------ |
+{% for p in methodologies %}{% if p.category == "custom" and p.evidence == "modeled" %}| {{ p.title }} | {{ p.granularity }} | {{ p.published }}{% if p.status == "comment" %}*{% endif %} | [link]({{ site.baseurl }}{{ p.permalink }}) |
+{% endif %}{% endfor %}
 
 ### Related Methodologies
 
 | Methodology | Published Date | URL |
 | ------------------ | ------------  | ------------ |
-| Decarbonization Accounting | 2025-02-07 | [link]({{ site.baseurl }}/methodologies/basic-decarbonization-accounting/2025-02-07) |
-| Demand Efficiency Calculations | 2026-02-19* | [link]({{ site.baseurl }}/methodologies/demand-efficiency-calculations/2026-02-19) |
-| Utility Bill Savings | 2026-06-23* | [link]({{ site.baseurl }}/methodologies/utility-bill-savings/2026-06-23) |
+{% for p in methodologies %}{% if p.category == "related" %}| {{ p.title }} | {{ p.published }}{% if p.status == "comment" %}*{% endif %} | [link]({{ site.baseurl }}{{ p.permalink }}) |
+{% endif %}{% endfor %}
 
 ## Meeting Presentations
 
