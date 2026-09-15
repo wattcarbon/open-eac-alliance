@@ -1,0 +1,190 @@
+---
+# The Primer theme supplies the page chrome; this layout supplies the
+# methodology.
+layout: default
+---
+{% comment %}
+  A methodology, rendered from the Google Doc that holds it.
+
+  The document is the authoritative copy. scripts/sync_google_docs.py writes its
+  text into the page, and marks every heading with the anchor the document uses
+  for that heading. This layout turns each of those into a link back to the same
+  section of the document, where a reader comments.
+
+  Every link here addresses the document with /view. A certificate names the URL
+  of the methodology that produced it, so a reader must not be able to change a
+  document that a published claim depends on.
+{% endcomment %}
+{% assign doc_url = "https://docs.google.com/document/d/" | append: page.google_doc_id | append: "/view" %}
+
+<div class="methodology-status">
+  <span class="methodology-state methodology-state--{{ page.status }}">
+    {% if page.status == "comment" %}Open for public comment{% else %}Approved{% endif %}
+  </span>
+  {% if page.published %}<span>Published {{ page.published }}</span>{% endif %}
+  <a class="methodology-open" href="{{ doc_url }}">Open in Google Docs</a>
+</div>
+
+<h1 class="methodology-title">{{ page.title }}</h1>
+<p class="methodology-doc-title" hidden></p>
+
+{% comment %}
+  The methodology itself is read from its document and rendered here, by
+  assets/js/methodology.js. What follows is what a reader sees until then, and
+  what a reader whose browser cannot reach the document keeps seeing.
+{% endcomment %}
+<div class="methodology-body">
+  <p class="methodology-waiting" id="methodology-waiting">
+    Reading the methodology from its
+    <a href="{{ doc_url }}">Google Doc</a>, which holds the authoritative copy.
+  </p>
+  <p class="methodology-waiting" id="methodology-unread" hidden>
+    This methodology could not be read from its
+    <a href="{{ doc_url }}">Google Doc</a>. Read it there, where the
+    authoritative copy is held.
+  </p>
+</div>
+
+<hr>
+
+<p class="methodology-footer">
+  The <a href="{{ doc_url }}">Google Doc</a> is the authoritative copy of this
+  methodology, and this page renders it as it stands. To comment on a section, follow the ¶ beside its
+  heading: it opens the document at that section.
+  {% if page.status == "comment" %}
+  This methodology is in its public comment period. Comments are read by the
+  OpenEAC Alliance reviewers.
+  {% endif %}
+</p>
+
+<p class="methodology-footer">
+  <a href="{{ site.baseurl }}/">All methodologies</a>
+</p>
+
+{% comment %}
+  The theme closes every page with "This site is open source. Improve this
+  page.", linking to an editor on this file. On a methodology it invites an edit
+  that the next sync overwrites without a word, because everything below the
+  front matter is written from the Google Doc. The document is where a change to
+  a methodology is made, and the footer above says so, so the theme's invitation
+  is hidden here and left in place on the pages a person does write by hand.
+{% endcomment %}
+<style>.footer { display: none; }</style>
+
+<style>
+  .methodology-status {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0.5rem 1rem;
+    margin-bottom: 1.5rem;
+    padding: 0.75rem 1rem;
+    border: 1px solid #d0d7de;
+    border-radius: 6px;
+    background: #f6f8fa;
+    font-size: 0.875rem;
+    color: #57606a;
+  }
+  .methodology-state {
+    padding: 0.125rem 0.6rem;
+    border-radius: 999px;
+    font-weight: 600;
+  }
+  .methodology-state--comment { background: #fff8c5; color: #7d4e00; }
+  .methodology-state--approved { background: #dafbe1; color: #1a7f37; }
+  .methodology-open {
+    margin-left: auto;
+    padding: 0.3rem 0.9rem;
+    border-radius: 6px;
+    background: #1f6feb;
+    color: #fff;
+    font-weight: 600;
+    text-decoration: none;
+  }
+  .methodology-open:hover { background: #1158c7; color: #fff; }
+
+  /* The section link sits in the margin and appears on hover, so a heading
+     reads as a heading rather than as a row of controls. It stays reachable
+     from the keyboard, and on a touch screen, where there is no hover, it is
+     always visible. */
+  .methodology-body h1,
+  .methodology-body h2,
+  .methodology-body h3,
+  .methodology-body h4,
+  .methodology-body h5,
+  .methodology-body h6 { position: relative; }
+  .methodology-comment {
+    position: absolute;
+    left: -1.4em;
+    opacity: 0;
+    font-weight: normal;
+    text-decoration: none;
+    color: #1f6feb;
+  }
+  .methodology-body :hover > .methodology-comment,
+  .methodology-comment:focus { opacity: 1; }
+  @media (hover: none) {
+    .methodology-comment { position: static; opacity: 0.6; margin-right: 0.3em; }
+  }
+  @media (max-width: 768px) {
+    .methodology-comment { position: static; opacity: 0.6; margin-right: 0.3em; }
+  }
+  /* The document titles itself more fully than the index names it. The fuller
+     title is the document's own words, so it is shown, under the name a reader
+     followed a link for rather than in place of it. */
+  .methodology-doc-title {
+    margin-top: -0.5rem;
+    font-size: 1.15rem;
+    color: #57606a;
+  }
+  /* A clause is indented by the depth it was written at, so the shape of the
+     page states the structure that the numbering also states. The step is small
+     because these documents nest six deep, and six wide steps would leave the
+     deepest clause a column of single words on a phone. */
+  .methodology-body .clause { margin-left: 0; }
+  .methodology-body .clause-2 { margin-left: 1.25rem; }
+  .methodology-body .clause-3 { margin-left: 2.5rem; }
+  .methodology-body .clause-4 { margin-left: 3.75rem; }
+  .methodology-body .clause-5 { margin-left: 5rem; }
+  .methodology-body .clause-6 { margin-left: 6.25rem; }
+  @media (max-width: 600px) {
+    .methodology-body .clause-2 { margin-left: 0.6rem; }
+    .methodology-body .clause-3 { margin-left: 1.2rem; }
+    .methodology-body .clause-4 { margin-left: 1.8rem; }
+    .methodology-body .clause-5 { margin-left: 2.4rem; }
+    .methodology-body .clause-6 { margin-left: 3rem; }
+  }
+  /* A cross-reference stays the number the document wrote. A specification
+     cites itself in almost every clause, and 200 blue numbers would read as
+     decoration rather than as text. */
+  .methodology-xref {
+    color: inherit;
+    text-decoration: none;
+    border-bottom: 1px dotted #8c959f;
+  }
+  .methodology-xref:hover,
+  .methodology-xref:focus {
+    color: #1f6feb;
+    border-bottom-color: #1f6feb;
+  }
+  /* The anchor is a marker, not content. */
+  .methodology-anchor {
+    display: inline;
+    scroll-margin-top: 1rem;
+  }
+  /* The browser scrolls the clause to the top of the window and gives no sign
+     of which clause it stopped at. */
+  .methodology-reached {
+    background: #fff8c5;
+    box-shadow: 0 0 0 0.35rem #fff8c5;
+    border-radius: 2px;
+  }
+  .methodology-footer { color: #57606a; font-size: 0.875rem; }
+</style>
+
+<span id="methodology-settings" data-document="{{ page.google_doc_id }}" hidden></span>
+<script
+  src="https://cdnjs.cloudflare.com/ajax/libs/marked/15.0.7/marked.min.js"
+  integrity="sha384-H+hy9ULve6xfxRkWIh/YOtvDdpXgV2fmAGQkIDTxIgZwNoaoBal14Di2YTMR6MzR"
+  crossorigin="anonymous"></script>
+<script src="{{ site.baseurl }}/assets/js/methodology.js"></script>
