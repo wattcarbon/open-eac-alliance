@@ -368,7 +368,8 @@
         body.innerHTML = rendered.innerHTML;
         decorate(body, docUrl);
         var subtitle = document.querySelector(".methodology-doc-title");
-        if (subtitle && title && title !== document.querySelector("h1").textContent.trim()) {
+        var pageTitle = document.querySelector(".methodology-title");
+        if (subtitle && title && pageTitle && title !== pageTitle.textContent.trim()) {
           subtitle.textContent = title;
           subtitle.hidden = false;
         }
