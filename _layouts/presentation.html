@@ -1,0 +1,97 @@
+---
+# The Primer theme supplies the page chrome; this layout supplies the deck.
+layout: default
+---
+{% comment %}
+  A methodology introduced by its slides.
+
+  The slides explain the method in a few minutes, and most readers want that
+  first. The methodology itself is one click away, at the top of the page,
+  because it is the text a claim is made under.
+
+  A page with this layout names the methodology page it introduces and the
+  standalone deck under presentations/. The deck is a whole HTML page, so it
+  is shown in a frame and can also be opened on its own, full screen.
+{% endcomment %}
+{% assign methodology_url = site.baseurl | append: page.methodology %}
+{% assign slides_url = site.baseurl | append: page.slides %}
+
+<div class="presentation-status">
+  <span class="methodology-state methodology-state--{{ page.status }}">
+    {% if page.status == "comment" %}Open for public comment{% else %}Approved{% endif %}
+  </span>
+  {% if page.published %}<span>Published {{ page.published }}</span>{% endif %}
+  <a class="presentation-methodology" href="{{ methodology_url }}">Read the detailed methodology &rarr;</a>
+</div>
+
+<h1 class="presentation-title">{{ page.title }}</h1>
+
+<div class="presentation-frame">
+  <iframe src="{{ slides_url }}" title="{{ page.title }}: presentation" allowfullscreen></iframe>
+</div>
+
+<p class="presentation-help">
+  Use the arrow keys or click the slide to move through the deck, and press N
+  for the speaker notes.
+  <a href="{{ slides_url }}">Open the presentation full screen</a>.
+</p>
+
+<p class="presentation-help">
+  The <a href="{{ methodology_url }}">methodology</a> states the requirements.
+  Where the slides and the methodology differ, the methodology applies.
+</p>
+
+<p class="presentation-help">
+  <a href="{{ site.baseurl }}/">All methodologies</a>
+</p>
+
+<style>
+  .presentation-status {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0.5rem 1rem;
+    margin-bottom: 1.5rem;
+    padding: 0.75rem 1rem;
+    border: 1px solid #d0d7de;
+    border-radius: 6px;
+    background: #f6f8fa;
+    font-size: 0.875rem;
+    color: #57606a;
+  }
+  .methodology-state {
+    padding: 0.125rem 0.6rem;
+    border-radius: 999px;
+    font-weight: 600;
+  }
+  .methodology-state--comment { background: #fff8c5; color: #7d4e00; }
+  .methodology-state--approved { background: #dafbe1; color: #1a7f37; }
+  .presentation-methodology {
+    margin-left: auto;
+    padding: 0.3rem 0.9rem;
+    border-radius: 6px;
+    background: #1f6feb;
+    color: #fff;
+    font-weight: 600;
+    text-decoration: none;
+  }
+  .presentation-methodology:hover { background: #1158c7; color: #fff; }
+  /* The deck draws on a 16:9 canvas, and its control bar sits below that. */
+  .presentation-frame {
+    position: relative;
+    width: 100%;
+    padding-top: calc(56.25% + 48px);
+    margin-bottom: 1rem;
+    border-radius: 6px;
+    overflow: hidden;
+    background: #0e1628;
+  }
+  .presentation-frame iframe {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    border: 0;
+  }
+  .presentation-help { color: #57606a; font-size: 0.875rem; }
+</style>

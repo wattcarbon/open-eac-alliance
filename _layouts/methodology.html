@@ -22,6 +22,7 @@ layout: default
     {% if page.status == "comment" %}Open for public comment{% else %}Approved{% endif %}
   </span>
   {% if page.published %}<span>Published {{ page.published }}</span>{% endif %}
+  {% if page.presentation %}<a href="{{ site.baseurl }}{{ page.presentation }}">View the presentation</a>{% endif %}
   <a class="methodology-open" href="{{ doc_url }}">Open in Google Docs</a>
 </div>
 

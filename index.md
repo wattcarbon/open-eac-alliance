@@ -10,6 +10,10 @@ methodology is therefore published by adding one file, and its status is stated
 in one place. A page with no `category` is reachable by its permalink but is not
 advertised here, which is how it was before these tables were generated.
 
+A page with a `presentation` is introduced by its slides: its row links the
+slides first and the methodology beside them, and its methodology page links
+back to the slides.
+
 Liquid only, no plugin: GitHub Pages builds this repository with its legacy
 pipeline, which runs a fixed plugin list.
 {% endcomment %}
@@ -53,7 +57,7 @@ applies where no metered methodology can.
 
 | Methodology | Published Date | URL |
 | ------------------ | ------------  | ------------ |
-{% for p in methodologies %}{% if p.category == "related" %}| {{ p.title }} | {{ p.published }}{% if p.status == "comment" %}*{% endif %} | [link]({{ site.baseurl }}{{ p.permalink }}) |
+{% for p in methodologies %}{% if p.category == "related" %}| {{ p.title }} | {{ p.published }}{% if p.status == "comment" %}*{% endif %} | {% if p.presentation %}[slides]({{ site.baseurl }}{{ p.presentation }}), [methodology]({{ site.baseurl }}{{ p.permalink }}){% else %}[link]({{ site.baseurl }}{{ p.permalink }}){% endif %} |
 {% endif %}{% endfor %}
 
 ## Meeting Presentations
