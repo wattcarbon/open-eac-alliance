@@ -7,6 +7,6 @@ layout: methodology
 category: custom
 granularity: Building
 published: 2025-10-02
-status: comment
+status: approved
 evidence: metered
 ---
