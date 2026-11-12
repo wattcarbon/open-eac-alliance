@@ -60,6 +60,7 @@ applies where no metered methodology can.
 
 | Date | Topic | Format |
 | ---- | ----- | ------ |
+| 2026 Q4 | Beneficial Load | [slides](https://docs.google.com/presentation/d/1qoi8_pXBqM_l09cNoVqYcmyXmuI3Bgi2kM7yzctcJsw/edit?usp=sharing) |
 | 2026 Q3 | DERs and the Grid | [pdf]({{ site.baseurl }}/meetings/2026-Q3_DERs_and_the_Grid.pdf), [demo]({{ site.baseurl }}/meetings/2026-Q3_Putting_a_Building_on_the_Grid.html) |
 | 2026 Q2 | Grid Score & Carbon Score | [slides]({{ site.baseurl }}/meetings/2026-Q2_GridScore_CarbonScore.html) |
 | 2026 Q1 | DER Capacity | [pdf]({{ site.baseurl }}/meetings/2026-Q1_DER_Capacity.pdf) |
